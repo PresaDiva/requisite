@@ -48,7 +48,7 @@
 <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="width:100%;max-width:640px;margin:0 auto;background:#FFFFFF;border:1px solid #E6E0E8;border-radius:16px;">
 
   <tr><td style="padding:24px 24px 18px 24px;border-bottom:3px solid #914AA1;">
-    <a href="{{ site.studio_url }}" style="font-family:{{ HEAD }};font-weight:700;font-size:20px;color:#1E1A24;text-decoration:none;">ReQu Studio</a><span style="color:#CFC5D3;font-size:20px;padding:0 10px;">|</span><a href="{{ "/" | absolute_url }}" style="font-family:{{ HEAD }};font-weight:600;font-size:16px;color:#914AA1;text-decoration:none;">ReQuisite</a>
+    <a target="_blank" rel="noopener noreferrer" href="{{ site.studio_url }}" style="font-family:{{ HEAD }};font-weight:700;font-size:20px;color:#1E1A24;text-decoration:none;">ReQu Studio</a><span style="color:#CFC5D3;font-size:20px;padding:0 10px;">|</span><a target="_blank" rel="noopener noreferrer" href="{{ "/" | absolute_url }}" style="font-family:{{ HEAD }};font-weight:600;font-size:16px;color:#914AA1;text-decoration:none;">ReQuisite</a>
   </td></tr>
 
   <tr><td style="padding:28px 24px 20px 24px;">
@@ -74,7 +74,7 @@
         <table role="presentation" width="100%" cellpadding="0" cellspacing="0">
         {%- assign items = body | split: "<li>" -%}
         {%- for it in items offset: 1 -%}
-          {%- assign text = it | split: "</li>" | first | strip | replace: "<a ", '<a style="color:#F2C14E;text-decoration:underline;" ' -%}
+          {%- assign text = it | split: "</li>" | first | strip | replace: "<a ", '<a target="_blank" rel="noopener noreferrer" style="color:#F2C14E;text-decoration:underline;" ' -%}
           {%- assign tkey = "" -%}
           {%- assign ihrefs = it | split: 'href="' -%}
           {%- for h in ihrefs offset: 1 -%}
@@ -144,7 +144,7 @@
     {%- endfor -%}
 
     {%- if is_talk -%}
-      {%- assign lk = '<a style="color:#F2C14E;text-decoration:underline;" ' -%}
+      {%- assign lk = '<a target="_blank" rel="noopener noreferrer" style="color:#F2C14E;text-decoration:underline;" ' -%}
   <tr><td style="padding:40px 24px 0 24px;">
     <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#1E1A24;border-radius:14px;">
       <tr>
@@ -161,7 +161,7 @@
     </table>
   </td></tr>
     {%- else -%}
-      {%- capture lk %}<a style="color:{{ t.accent }};text-decoration:underline;" {% endcapture -%}
+      {%- capture lk %}<a target="_blank" rel="noopener noreferrer" style="color:{{ t.accent }};text-decoration:underline;" {% endcapture -%}
       {%- assign codestyle = '<code style="font-family:Menlo,Consolas,monospace;font-size:13px;background:#F2EEF3;color:#1E1A24;padding:1px 5px;border-radius:4px;">' -%}
   <tr><td style="padding:0 24px;">
     <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:{{ t.tint }};">
@@ -198,8 +198,8 @@
   <tr><td style="padding:36px 24px 28px 24px;">
     <div style="border-top:1px solid #E6E0E8;padding-top:20px;font-family:{{ BODY }};font-size:14px;line-height:22px;color:#5E5866;">
       <strong style="font-family:{{ HEAD }};color:#1E1A24;">ReQu Studio</strong><br>
-      People, data and AI, working together. Curated by Chelsea Wilson at <a href="{{ site.studio_url }}" style="color:#914AA1;">ReQu Studio</a>. Every item links to its original source, and summaries state only what the source says.<br><br>
-      <a href="{{ include.post.url | absolute_url }}" style="color:#914AA1;">Read on the web</a>&nbsp;&nbsp;<span style="color:#CFC5D3;">|</span>&nbsp;&nbsp;<a href="{{ "/" | absolute_url }}" style="color:#914AA1;">All ReQuisites</a>
+      People, data and AI, working together. Curated by Chelsea Wilson at <a target="_blank" rel="noopener noreferrer" href="{{ site.studio_url }}" style="color:#914AA1;">ReQu Studio</a>. Every item links to its original source, and summaries state only what the source says.<br><br>
+      <a target="_blank" rel="noopener noreferrer" href="{{ include.post.url | absolute_url }}" style="color:#914AA1;">Read on the web</a>&nbsp;&nbsp;<span style="color:#CFC5D3;">|</span>&nbsp;&nbsp;<a target="_blank" rel="noopener noreferrer" href="{{ "/" | absolute_url }}" style="color:#914AA1;">All ReQuisites</a>
     </div>
   </td></tr>
 
