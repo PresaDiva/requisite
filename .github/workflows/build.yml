@@ -1,0 +1,31 @@
+name: Check site build
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check post structure
+        run: python3 .github/scripts/check_posts.py
+      - name: Build with Jekyll (same builder as GitHub Pages)
+        uses: actions/jekyll-build-pages@v1
+        with:
+          source: ./
+          destination: ./_site
+      - name: Check the email feed is valid XML and fully rendered
+        run: |
+          python3 - <<'PY'
+          import xml.dom.minidom as m
+          d = m.parse("_site/latest.xml")
+          items = d.getElementsByTagName("item")
+          assert items, "latest.xml has no item"
+          html = items[0].getElementsByTagName("description")[0].firstChild.data
+          assert "{%" not in html and "{{" not in html, "unrendered Liquid in email"
+          assert "Top 3 today" in html, "Top 3 missing from email"
+          print("latest.xml OK")
+          PY

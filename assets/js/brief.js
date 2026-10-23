@@ -123,9 +123,6 @@
         card.appendChild(el);
       }
     });
-    var empty = /nothing (significant|major) today/i.test(s.el.textContent);
-    if (empty) s.el.classList.add('is-empty');
-
     var meta = TOPICS[s.kind];
     if (!meta) return;
     if (s.kind !== 'talking' && s.kind !== 'security') topicNo++;
@@ -153,7 +150,7 @@
     if (s.kind !== 'talking') {
       var badge = document.createElement('span');
       badge.className = 'sec-count';
-      badge.textContent = empty || !count ? 'Quiet day' : count + (count === 1 ? ' item' : ' items');
+      badge.textContent = count + (count === 1 ? ' item' : ' items');
       head.appendChild(badge);
     }
   });

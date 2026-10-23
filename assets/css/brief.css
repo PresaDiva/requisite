@@ -230,7 +230,6 @@ p.field.act .label { background: var(--ink); color: var(--gold); }
 .sec-talking .sec-head { background: transparent; border-top: 0; margin-bottom: 8px; }
 .sec-talking .card { border-top-color: var(--ink); margin: 0 16px 16px; }
 
-.sec.is-empty > p { color: var(--muted); font-style: italic; background: var(--surface); border: 1px dashed var(--line-strong); border-radius: var(--radius); padding: 16px 20px; }
 .sec-checks { font-size: 14px; color: var(--muted); }
 
 @media (max-width: 640px) {

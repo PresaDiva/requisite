@@ -1,6 +1,13 @@
 # Look of each ReQuisite section in the emailed edition.
 # "match" is a lowercase phrase found in the section heading the daily task writes.
-# A section whose heading matches nothing uses the first entry (purple).
+# A section whose heading matches nothing uses the first entry (neutral grey, key "other").
+- match: "__default__"
+  key: other
+  short: More
+  accent: "#5E5866"
+  tint: "#F2EEF3"
+  rule: "#DDD5E0"
+  note: More from today
 - match: "ai products"
   key: products
   short: Products

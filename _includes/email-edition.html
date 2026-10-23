@@ -25,6 +25,7 @@
   {%- assign t = themes[0] -%}
   {%- for th in themes -%}{%- if lname contains th.match -%}{%- assign t = th -%}{%- break -%}{%- endif -%}{%- endfor -%}
   {%- assign body = parts | slice: 1, 99 | join: "</h2>" -%}
+  {%- include email-normalize.html -%}
   {%- assign n = body | split: "<p><strong>" | size | minus: 1 -%}
   {%- assign hrefs = body | split: 'href="' -%}
   {%- for h in hrefs offset: 1 -%}
@@ -37,14 +38,17 @@
           <a href="#{{ sid }}" style="text-decoration:none;display:block;background:{{ t.tint }};border-radius:10px;padding:12px 2px 10px 2px;">
             <img src="{{ icon_base }}{{ t.key }}.png" width="28" height="28" alt="" style="display:block;margin:0 auto;border:0;width:28px;height:28px;">
             <div style="font-family:{{ HEAD }};font-weight:700;font-size:12px;line-height:17px;color:{{ t.accent }};padding-top:6px;">{{ t.short }}</div>
-            <div style="font-family:{{ BODY }};font-size:11px;line-height:15px;color:#5E5866;">{{ n }} {% if n == 1 %}story{% else %}stories{% endif %}</div>
+            <div style="font-family:{{ BODY }};font-size:12px;line-height:16px;color:#5E5866;">{{ n }} {% if n == 1 %}story{% else %}stories{% endif %}</div>
           </a>
         </td>
   {%- endcapture -%}
   {%- assign glance = glance | append: cell -%}
 {%- endfor -%}
 
+{%- assign pre_src = include.post.content | split: "<li>" | slice: 1, 1 | first | split: "</li>" | first | strip_html | strip | truncate: 140 -%}
 <div style="background:#FAF8F5;margin:0;padding:24px 8px 40px 8px;">
+<div style="display:none;max-height:0;overflow:hidden;mso-hide:all;font-size:1px;line-height:1px;color:#FAF8F5;opacity:0;">{{ pre_src | escape }}</div>
+<!--[if mso]><table role="presentation" width="640" align="center" cellpadding="0" cellspacing="0"><tr><td><![endif]-->
 <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="width:100%;max-width:640px;margin:0 auto;background:#FFFFFF;border:1px solid #E6E0E8;border-radius:16px;">
 
   <tr><td style="padding:24px 24px 18px 24px;border-bottom:3px solid #914AA1;">
@@ -65,6 +69,7 @@
   {%- assign name = parts[0] | split: ">" | last | strip -%}
   {%- assign lname = name | downcase -%}
   {%- assign body = parts | slice: 1, 99 | join: "</h2>" -%}
+  {%- include email-normalize.html -%}
 
   {%- if lname contains "top 3" -%}
   <tr><td style="padding:0 24px 8px 24px;">
@@ -88,7 +93,7 @@
           <tr>
             <td valign="top" style="width:38px;padding:0 0 20px 0;font-family:{{ HEAD }};font-weight:800;font-size:30px;line-height:30px;color:#F2C14E;">{{ forloop.index }}</td>
             <td valign="top" style="padding:0 0 20px 0;font-family:{{ BODY }};font-size:16px;line-height:24px;color:#FAF8F5;">
-              {%- for th in themes -%}{%- if th.key == tkey -%}<span style="display:inline-block;background:{{ th.accent }};color:#FFFFFF;font-family:{{ HEAD }};font-weight:700;font-size:11px;line-height:16px;padding:2px 8px;border-radius:999px;margin-bottom:6px;">{{ th.short }}</span><br>{%- endif -%}{%- endfor -%}
+              {%- for th in themes -%}{%- if th.key == tkey -%}<span style="display:inline-block;background:{{ th.accent }};color:#FFFFFF;font-family:{{ HEAD }};font-weight:700;font-size:12px;line-height:16px;padding:2px 8px;border-radius:999px;margin-bottom:6px;">{{ th.short }}</span><br>{%- endif -%}{%- endfor -%}
               {{ text }}</td>
           </tr>
         {%- endfor %}
@@ -126,7 +131,7 @@
     {%- assign hp = ch | split: "</strong></p>" -%}
     {%- assign headline = hp[0] | strip -%}
     {%- assign paras = hp | slice: 1, 99 | join: "</strong></p>" | split: "<p>" -%}
-    {%- assign summary = "" -%}{%- assign why = "" -%}{%- assign source = "" -%}{%- assign fields = "" -%}{%- assign labels = "What happened|Who could be affected and how|Actions to take|Suggested" -%}
+    {%- assign summary = "" -%}{%- assign why = "" -%}{%- assign source = "" -%}{%- assign fields = "" -%}{%- assign labels = "What happened|Who could be affected and how|Actions to take|Suggested" | split: "|" -%}
     {%- for p in paras -%}
       {%- assign txt = p | split: "</p>" | first | strip -%}
       {%- if txt == "" -%}{%- continue -%}{%- endif -%}
@@ -187,7 +192,7 @@
             </table>
             {%- endif -%}
             {%- if source != "" %}
-            <div style="font-family:{{ BODY }};font-size:13px;line-height:19px;color:#5E5866;padding-top:12px;"><strong style="color:{{ t.accent }};">Source</strong>&nbsp; {{ source | replace: "<a ", lk }}</div>
+            <div style="font-family:{{ BODY }};font-size:14px;line-height:20px;color:#5E5866;padding-top:12px;"><strong style="color:{{ t.accent }};">Source</strong>&nbsp; {{ source | replace: "<a ", lk }}</div>
             {%- endif %}
           </td></tr>
         </table>
@@ -212,4 +217,5 @@
   </td></tr>
 
 </table>
+<!--[if mso]></td></tr></table><![endif]-->
 </div>

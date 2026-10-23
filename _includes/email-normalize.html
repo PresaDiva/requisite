@@ -1,0 +1,17 @@
+{%- comment -%}
+  Normalise: only a paragraph that is entirely bold counts as an item headline.
+  A paragraph that merely starts with bold text gets a leading space so it is not
+  mistaken for one. Works on the variable `body` and re-assigns it.
+{%- endcomment -%}
+{%- assign _ps = body | split: "<p>" -%}
+{%- assign _out = _ps[0] -%}
+{%- for _p in _ps offset: 1 -%}
+  {%- assign _t = _p | split: "</p>" | first | strip -%}
+  {%- assign _starts = _t | slice: 0, 8 -%}
+  {%- assign _ends = _t | slice: -9, 9 -%}
+  {%- if _starts == "<strong>" and _ends != "</strong>" -%}
+    {%- assign _p = _p | replace_first: "<strong>", " <strong>" -%}
+  {%- endif -%}
+  {%- assign _out = _out | append: "<p>" | append: _p -%}
+{%- endfor -%}
+{%- assign body = _out -%}
