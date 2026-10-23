@@ -28,6 +28,8 @@
       icon: '<path d="M12 3v18"/><path d="M8 21h8"/><path d="M5 7h14"/><path d="M5 7l-3 7a3.5 3.5 0 0 0 6 0z"/><path d="M19 7l-3 7a3.5 3.5 0 0 0 6 0z"/>' },
     environment: { blurb: 'Energy, water, data centers, equity and wider social effects',
       icon: '<path d="M5 20c0-9 6-15 15-15 0 9-6 15-14 15"/><path d="M5 20c3-5 6-8.5 10-11"/>' },
+    offbeat: { blurb: 'Credible research and reporting from outside the mainstream news cycle',
+      icon: '<circle cx="12" cy="12" r="9"/><path d="M15.5 8.5l-2 5-5 2 2-5z"/>' },
     talking: { blurb: 'One idea worth raising with clients this week',
       icon: '<path d="M4 5h16v11H9l-5 4z"/><path d="M8 9.5h8M8 12.5h5"/>' }
   };
@@ -37,6 +39,7 @@
     if (t.indexOf('top 3') === 0) return 'top3';
     if (t.indexOf('security') !== -1 || t.indexOf('compliance') !== -1) return 'security';
     if (t.indexOf('talking point') === 0) return 'talking';
+    if (t.indexOf('beaten path') !== -1) return 'offbeat';
     if (t.indexOf('sources and checks') === 0) return 'checks';
     if (t.indexOf('workforce') !== -1 || t.indexOf('jobs') !== -1) return 'workforce';
     if (t.indexOf('policy') !== -1 || t.indexOf('regulation') !== -1) return 'policy';

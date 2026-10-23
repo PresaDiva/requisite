@@ -145,6 +145,7 @@ code {
 [data-topic="workforce"]   { --accent: #B4521F; --accent-dark: #8A3D15; --tint: #FBEDE3; }
 [data-topic="policy"]      { --accent: #2F5C99; --accent-dark: #22457A; --tint: #E8EFF8; }
 [data-topic="environment"] { --accent: #3F6B2E; --accent-dark: #2E5121; --tint: #EAF2E4; }
+[data-topic="offbeat"] { --accent: #A04A24; --accent-dark: #7E3718; --tint: #FBEEE8; }
 [data-topic="security"]    { --accent: #8A6400; --accent-dark: #6B4D00; --tint: #FDF4DA; --icon-bg: #F2C14E; --icon-fg: #1E1A24; }
 [data-topic="talking"]     { --accent: #1E1A24; --accent-dark: #1E1A24; --tint: #F2EEF3; }
 [data-topic="top3"]        { --accent: #F2C14E; }

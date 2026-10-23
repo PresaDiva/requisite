@@ -36,3 +36,10 @@
   tint: "#EEF5EA"
   rule: "#D4E4CC"
   note: Energy, land and communities
+- match: "off the beaten"
+  key: offbeat
+  short: Off the path
+  accent: "#B4532A"
+  tint: "#FBEEE8"
+  rule: "#EFCFC0"
+  note: Credible research and reporting outside the headlines

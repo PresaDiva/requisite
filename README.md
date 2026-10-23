@@ -24,3 +24,5 @@ The sign-up forms post to Buttondown (https://buttondown.com). To turn email del
 
 The layout reads the edition's existing Markdown format, so the daily task does not need to change. It relies on: `## Section name` headings, a bulleted list under "Top 3 today", each story starting with a bold headline on its own line, and lines beginning `Why it matters:` and `Source:`. A section whose heading matches nothing in the data file appears in purple.
 
+
+The daily task may add an optional "## Off the beaten path" section for credible research and reporting outside the mainstream news cycle. It has its own color, icon and description in the email (`_data/requisite_sections.yml`, `assets/img/icons/offbeat.png`) and on the site (`assets/js/brief.js`, `assets/css/brief.css`).
