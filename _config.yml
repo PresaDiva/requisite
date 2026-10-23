@@ -19,6 +19,7 @@ future: true
 exclude:
   - README.md
   - hostinger-embed.html
+  - ci
 # Email sign-up. The form posts to Buttondown. Change "username" to your Buttondown newsletter username.
 newsletter:
   username: "requisite"

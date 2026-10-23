@@ -10,8 +10,10 @@
   {%- assign _starts = _t | slice: 0, 8 -%}
   {%- assign _ends = _t | slice: -9, 9 -%}
   {%- if _starts == "<strong>" and _ends != "</strong>" -%}
-    {%- assign _p = _p | replace_first: "<strong>", " <strong>" -%}
+    {%- assign _q = _p | replace_first: "<strong>", " <strong>" -%}
+  {%- else -%}
+    {%- assign _q = _p -%}
   {%- endif -%}
-  {%- assign _out = _out | append: "<p>" | append: _p -%}
+  {%- assign _out = _out | append: "<p>" | append: _q -%}
 {%- endfor -%}
 {%- assign body = _out -%}

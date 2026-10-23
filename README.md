@@ -26,3 +26,11 @@ The layout reads the edition's existing Markdown format, so the daily task does 
 
 
 The daily task may add an optional "## Off the beaten path" section for credible research and reporting outside the mainstream news cycle. It has its own color, icon and description in the email (`_data/requisite_sections.yml`, `assets/img/icons/offbeat.png`) and on the site (`assets/js/brief.js`, `assets/css/brief.css`).
+
+### Checks and safeguards
+
+- `.github/scripts/check_posts.py` validates every post (front matter, the allowed section headings, no raw HTML, no em dashes, no empty sections). Run it locally with `python3 .github/scripts/check_posts.py`.
+- `ci/build.yml.example` is a GitHub Actions workflow that runs that check, builds the site with the Pages builder, and checks the email feed. To turn it on, move it to `.github/workflows/build.yml` (GitHub's web editor can do this; the automated task cannot push workflow files).
+- `future: true` in `_config.yml` makes sure a post dated 07:30 later the same day is still published when the task runs earlier in the morning.
+- Sections with no news are left out of the edition. The home page archive list is paginated (10 per page, `assets/js/archive.js`).
+- Section looks: `_data/requisite_sections.yml` (email) and `assets/js/brief.js` plus `assets/css/brief.css` (site). Unknown headings fall back to a neutral grey "More" look in the email.
