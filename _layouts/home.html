@@ -1,0 +1,66 @@
+---
+layout: default
+---
+{%- assign newest = site.posts | first -%}
+<section class="hero">
+  <div class="wrap">
+    <p class="eyebrow">ReQuisite</p>
+    <h1 class="hero-title">{{ site.tagline }}</h1>
+    <p class="hero-sub">The daily read from ReQu Studio for people leading data and AI work: products, data and analytics, the workforce, policy, security, and AI's impact on people and the planet. Every item links to its source.</p>
+  </div>
+</section>
+
+<section class="wrap latest" aria-labelledby="latest-heading">
+  {%- if newest %}
+  {%- assign words = newest.content | strip_html | number_of_words -%}
+  {%- assign minutes = words | divided_by: 200 | plus: 1 -%}
+  {%- assign parts = newest.content | split: '<h2' -%}
+  <article class="latest-card">
+    <div class="latest-meta">
+      <span class="pill">Latest</span>
+      <time datetime="{{ newest.date | date_to_xmlschema }}">{{ newest.date | date: "%A, %B %-d, %Y" }}</time>
+      <span class="dot" aria-hidden="true">·</span>
+      <span>{{ minutes }} min read</span>
+    </div>
+    <h2 id="latest-heading" class="latest-title"><a href="{{ newest.url | relative_url }}">{{ newest.title | remove: "ReQuisite: " }}</a></h2>
+    {%- if parts.size > 1 %}
+    <div class="latest-top3">
+      <h2{{ parts[1] }}
+    </div>
+    {%- endif %}
+    <div class="actions">
+      <a class="btn btn-primary" href="{{ newest.url | relative_url }}">Read today's ReQuisite</a>
+      <a class="btn btn-ghost" href="#archive">See all ReQuisites</a>
+    </div>
+  </article>
+  {%- else %}
+  <p>The first ReQuisite is on its way.</p>
+  {%- endif %}
+</section>
+
+{% include subscribe.html id="-home" source="archive-home" %}
+
+<section class="wrap archive" id="archive" aria-labelledby="archive-heading">
+  <div class="section-head">
+    <h2 id="archive-heading">All ReQuisites</h2>
+    <p class="count">{{ site.posts.size }} {% if site.posts.size == 1 %}ReQuisite{% else %}ReQuisites{% endif %}</p>
+  </div>
+  {%- assign by_month = site.posts | group_by_exp: "p", "p.date | date: '%B %Y'" -%}
+  {%- for month in by_month %}
+  <h3 class="month">{{ month.name }}</h3>
+  <ul class="archive-list">
+    {%- for post in month.items %}
+    <li>
+      <a class="archive-item" href="{{ post.url | relative_url }}">
+        <span class="archive-date">
+          <span class="day">{{ post.date | date: "%-d" }}</span>
+          <span class="dow">{{ post.date | date: "%a" }}</span>
+        </span>
+        <span class="archive-title">{{ post.title | remove: "ReQuisite: " }}</span>
+        <span class="arrow" aria-hidden="true">&rarr;</span>
+      </a>
+    </li>
+    {%- endfor %}
+  </ul>
+  {%- endfor %}
+</section>

@@ -1,0 +1,42 @@
+---
+layout: default
+---
+{%- assign words = content | strip_html | number_of_words -%}
+{%- assign minutes = words | divided_by: 200 | plus: 1 -%}
+<article class="brief">
+  <header class="brief-hero">
+    <div class="wrap narrow">
+      <p class="eyebrow">ReQuisite</p>
+      <h1 class="brief-title">{{ page.title | remove: "ReQuisite: " }}</h1>
+      <p class="brief-meta">
+        <time datetime="{{ page.date | date_to_xmlschema }}">{{ page.date | date: "%B %-d, %Y" }}</time>
+        <span class="dot" aria-hidden="true">·</span>
+        <span>{{ minutes }} min read</span>
+        <span class="dot" aria-hidden="true">·</span>
+        <span>Every item links to its source</span>
+      </p>
+    </div>
+  </header>
+
+  <nav class="toc" aria-label="Sections in this ReQuisite" hidden>
+    <div class="wrap narrow toc-row" id="toc"></div>
+  </nav>
+
+  <div class="wrap narrow brief-body" id="brief-body">
+    {{ content }}
+  </div>
+
+  <nav class="wrap narrow pager" aria-label="More ReQuisites">
+    {%- if page.previous %}
+    <a class="pager-link" href="{{ page.previous.url | relative_url }}"><span class="pager-label">&larr; Earlier</span><span>{{ page.previous.title | remove: "ReQuisite: " }}</span></a>
+    {%- else %}<span></span>{%- endif %}
+    {%- if page.next %}
+    <a class="pager-link next" href="{{ page.next.url | relative_url }}"><span class="pager-label">Later &rarr;</span><span>{{ page.next.title | remove: "ReQuisite: " }}</span></a>
+    {%- endif %}
+  </nav>
+  <div class="wrap narrow actions center">
+    <a class="btn btn-primary" href="{{ "/latest/" | relative_url }}">Read today's ReQuisite</a>
+    <a class="btn btn-ghost" href="{{ "/#archive" | relative_url }}">See all ReQuisites</a>
+  </div>
+</article>
+{% include subscribe.html id="-post" source="archive-edition" %}

@@ -1,0 +1,25 @@
+---
+layout: null
+permalink: /latest/
+sitemap: false
+---
+{%- assign newest = site.posts | first -%}
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Latest ReQuisite</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+{%- if newest %}
+<link rel="canonical" href="{{ newest.url | absolute_url }}">
+<meta http-equiv="refresh" content="0; url={{ newest.url | relative_url }}">
+{%- endif %}
+</head>
+<body>
+{%- if newest %}
+<p>Opening the latest ReQuisite: <a href="{{ newest.url | relative_url }}">{{ newest.title | escape }}</a></p>
+{%- else %}
+<p>No ReQuisites yet. <a href="{{ "/" | relative_url }}">See the archive</a>.</p>
+{%- endif %}
+</body>
+</html>

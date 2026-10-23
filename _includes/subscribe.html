@@ -1,0 +1,15 @@
+<section class="subscribe" id="subscribe" aria-labelledby="subscribe-heading">
+  <div class="wrap narrow subscribe-inner">
+    <p class="eyebrow">The ReQuisite newsletter</p>
+    <h2 id="subscribe-heading">Get ReQuisite in your inbox every morning</h2>
+    <p class="subscribe-sub">Five minutes on data, AI and the people who use them. Every item links to its source. No hype, no spam, and unsubscribing takes one click.</p>
+    <form class="subscribe-form" action="https://buttondown.com/api/emails/embed-subscribe/{{ site.newsletter.username }}" method="post" target="popupwindow" onsubmit="window.open('https://buttondown.com/{{ site.newsletter.username }}', 'popupwindow')">
+      <label for="subscribe-email{{ include.id }}" class="visually-hidden">Email address</label>
+      <input id="subscribe-email{{ include.id }}" type="email" name="email" required autocomplete="email" placeholder="you@company.com">
+      <input type="hidden" name="embed" value="1">
+      <input type="hidden" name="tag" value="{{ include.source | default: 'archive' }}">
+      <button type="submit" class="btn btn-primary">Subscribe</button>
+    </form>
+    <p class="subscribe-note">Free. One email a day. You'll get a confirmation email first.</p>
+  </div>
+</section>

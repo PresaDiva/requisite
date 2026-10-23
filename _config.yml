@@ -1,0 +1,22 @@
+title: ReQuisite
+tagline: Data, AI and the people who use them: what changed today, in five minutes.
+description: >-
+  ReQuisite is a five-minute daily read from ReQu Studio on data, AI and the people
+  who use them: products, data and analytics, the workforce, policy, security, and
+  AI's impact on people and the planet. Every item links to its source.
+url: "https://presadiva.github.io"
+baseurl: "/requisite"
+author: Chelsea Wilson
+studio_url: "https://requstudio.com"
+plugins:
+  - jekyll-feed
+permalink: /:year/:month/:day/:title/
+feed:
+  path: feed.xml
+markdown: kramdown
+exclude:
+  - README.md
+  - hostinger-embed.html
+# Email sign-up. The form posts to Buttondown. Change "username" to your Buttondown newsletter username.
+newsletter:
+  username: "requisite"
