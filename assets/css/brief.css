@@ -119,6 +119,17 @@ code {
   text-decoration: none; color: var(--text); transition: border-color .15s ease, transform .15s ease;
 }
 .archive-item:hover { border-color: var(--purple); transform: translateY(-1px); color: var(--text); }
+.archive-list li[hidden], .archive-list[hidden], .month[hidden] { display: none; }
+.pagination { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 8px; margin-top: 32px; }
+.page-btn {
+  min-width: 44px; min-height: 44px; padding: 0 14px; border-radius: var(--radius-sm);
+  border: 1px solid var(--line-strong); background: var(--surface); color: var(--ink);
+  font-family: var(--body); font-size: 15px; font-weight: 500; cursor: pointer;
+}
+.page-btn:hover:not(:disabled) { border-color: var(--purple); color: var(--purple); }
+.page-btn.is-current { background: var(--purple); border-color: var(--purple); color: #FFFFFF; }
+.page-btn:disabled { opacity: .45; cursor: default; }
+.page-gap { color: var(--muted); padding: 0 2px; }
 .archive-date { display: flex; flex-direction: column; align-items: center; justify-content: center; min-width: 52px; height: 52px; border-radius: var(--radius-sm); background: var(--soft); }
 .archive-date .day { font-family: var(--head); font-weight: 700; font-size: 20px; line-height: 1; color: var(--purple); }
 .archive-date .dow { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); margin-top: 3px; }
