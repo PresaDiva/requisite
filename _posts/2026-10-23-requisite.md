@@ -96,10 +96,6 @@ Why it matters: US clients making automated decisions about Colorado residents h
 
 Source: [Colorado Attorney General, AI rulemaking](https://coag.gov/ai/) (Oct 21, 2026)
 
-## Off the beaten path
-
-Nothing significant today.
-
 ## Environmental and societal impacts
 
 **Google to fund solar, batteries and grid upgrades for its Arkansas data center**
