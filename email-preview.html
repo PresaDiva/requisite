@@ -1,0 +1,18 @@
+---
+layout: null
+permalink: /email-preview/
+sitemap: false
+---
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Email preview: {{ site.posts.first.title }}</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Manrope:wght@600;700;800&display=swap">
+</head>
+<body style="margin:0;background:#FAF8F5;">
+{%- for post in site.posts limit:1 %}{% include email-edition.html post=post %}{% endfor %}
+</body>
+</html>

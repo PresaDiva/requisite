@@ -1,0 +1,38 @@
+# Look of each ReQuisite section in the emailed edition.
+# "match" is a lowercase phrase found in the section heading the daily task writes.
+# A section whose heading matches nothing uses the first entry (purple).
+- match: "ai products"
+  key: products
+  short: Products
+  accent: "#914AA1"
+  tint: "#F5EEF7"
+  rule: "#E3D3E8"
+  note: New models, tools and launches
+- match: "data and"
+  key: data
+  short: Data
+  accent: "#2F7F86"
+  tint: "#EAF4F4"
+  rule: "#CDE3E4"
+  note: Warehouses, pipelines and the analytics stack
+- match: "workforce"
+  key: workforce
+  short: Workforce
+  accent: "#3A5BA0"
+  tint: "#EEF2FA"
+  rule: "#D3DCEF"
+  note: Jobs, skills and how work is changing
+- match: "policy"
+  key: policy
+  short: Policy
+  accent: "#8A5A12"
+  tint: "#FBF4E4"
+  rule: "#EEDDB8"
+  note: Laws, regulators and deadlines
+- match: "environmental"
+  key: environment
+  short: Impacts
+  accent: "#4A7C3A"
+  tint: "#EEF5EA"
+  rule: "#D4E4CC"
+  note: Energy, land and communities

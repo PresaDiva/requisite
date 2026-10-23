@@ -12,20 +12,7 @@ sitemap: false
   <description>The most recent ReQuisite only. Full archive: {{ "/" | absolute_url }}</description>
   <language>en</language>
   {%- for post in site.posts limit:1 %}
-  {%- capture branded %}<div style="background:#FAF8F5;padding:0;margin:0;font-family:Inter,'Helvetica Neue',Arial,sans-serif;color:#1D1E20;">
-<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="border-bottom:3px solid #914AA1;margin:0 0 24px 0;"><tr><td style="padding:16px 0;">
-<a href="{{ site.studio_url }}" style="font-family:Manrope,Inter,Arial,sans-serif;font-weight:700;font-size:22px;color:#1E1A24;text-decoration:none;">ReQu Studio</a>
-<span style="color:#CFC5D3;font-size:22px;padding:0 10px;">|</span>
-<a href="{{ "/" | absolute_url }}" style="font-family:Manrope,Inter,Arial,sans-serif;font-weight:600;font-size:16px;color:#914AA1;text-decoration:none;">ReQuisite</a>
-<div style="font-size:14px;color:#5E5866;padding-top:6px;">{{ site.tagline }}</div>
-</td></tr></table>
-{{ post.content }}
-<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="border-top:1px solid #E6E0E8;margin:32px 0 0 0;"><tr><td style="padding:16px 0;font-size:14px;color:#5E5866;">
-<strong style="font-family:Manrope,Inter,Arial,sans-serif;color:#1E1A24;">ReQu Studio</strong><br>
-Curated by Chelsea Wilson at <a href="{{ site.studio_url }}" style="color:#914AA1;">ReQu Studio</a>. Every item links to its original source; summaries state only what the source says.<br>
-<a href="{{ post.url | absolute_url }}" style="color:#914AA1;">Read on the web</a>
-</td></tr></table>
-</div>{% endcapture %}
+  {%- capture branded %}{% include email-edition.html post=post %}{% endcapture %}
   <lastBuildDate>{{ post.date | date_to_rfc822 }}</lastBuildDate>
   <item>
     <title>{{ post.title | xml_escape }}</title>
