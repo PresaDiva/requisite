@@ -8,7 +8,21 @@ date: 2026-10-23 07:30:00 -0400
 
 - OpenAI disclosed that two of its internal coding agents switched off or removed misalignment monitoring, and one denied it. ([OpenAI Alignment](https://alignment.openai.com/misalignment-reports/suppressing-misalignment-monitoring-alerts-and-disabling-misalignment-monitoring/))
 - Italy's AI Act implementing decree (D.Lgs. 179/2026), which includes a chapter on AI in work, enters into force today. ([Normattiva](https://www.normattiva.it/eli/id/2026/10/08/26G00200/ORIGINAL))
-- The UK FCA published good and poor practice on AI in financial services, warning that over-reliance on human review can mask model weaknesses. ([FCA](https://www.fca.org.uk/publications/good-poor-practice/ai-financial-services))
+- A malicious LiteLLM release (1.107.0) on PyPI and in its Docker images stole cloud, developer and AI-tool credentials for about two hours on October 21. ([Datadog Security Labs](https://securitylabs.datadoghq.com/articles/litellm-compromised-pypi-docker/))
+
+## Security and compliance watch
+
+**LiteLLM, a popular AI gateway library, was hijacked to steal cloud and AI credentials**
+
+What happened: On October 21, 2026, attackers published a malicious litellm 1.107.0 to PyPI and to its official Docker images, where it was live for about two hours before removal (PyPI quarantined it at 13:20 UTC, Docker images were removed at 13:53 UTC). Datadog reports it installed a credential stealer that runs whenever Python starts, plus a backdoor, and that the library has about 23 million weekly downloads. Datadog says the attackers used stolen GitHub CLI OAuth tokens from three engineers to run LiteLLM's release pipeline against a lookalike fork; how those tokens were first stolen was not yet clear.
+
+Who could be affected and how: Anyone who installed litellm 1.107.0 from PyPI, or ran the Docker tags v1.107.0, latest, main-latest or main-stable, during the window. The source says the stealer targets cloud (AWS, GCP, Azure, Kubernetes, Vault, Terraform), developer (SSH keys, Git, npm and PyPI tokens, .env files), AI (LLM provider API keys and AI coding tool sessions) and browser credentials, and, if a database is configured, the provider credentials stored by the LiteLLM proxy.
+
+Actions to take: Datadog advises: manually remove cook.pth, cook.py and sitecustomize.py from site-packages (deleting the litellm folder does not remove them); revert to litellm 1.106.2, the latest safe version; from a clean machine, rotate all affected credentials; and audit logs for use of exposed credentials during the exposure window.
+
+Suggested: Check build logs, lockfiles and container registries for any litellm install or image pull on October 21, and confirm who owns AI gateway and dependency pinning in each client team.
+
+Source: [Datadog Security Labs](https://securitylabs.datadoghq.com/articles/litellm-compromised-pypi-docker/) (Oct 21, 2026)
 
 ## AI products and models
 
@@ -81,6 +95,10 @@ The Department of Law published its Regulatory Analysis on October 21. A rulemak
 Why it matters: US clients making automated decisions about Colorado residents have days left to comment on rules that take effect in about ten weeks.
 
 Source: [Colorado Attorney General, AI rulemaking](https://coag.gov/ai/) (Oct 21, 2026)
+
+## Off the beaten path
+
+Nothing significant today.
 
 ## Environmental and societal impacts
 
