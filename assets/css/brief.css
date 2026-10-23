@@ -131,12 +131,13 @@ code {
 .brief-title { margin: 0; font-weight: 600; font-size: clamp(32px, 4.6vw, 46px); letter-spacing: -0.01em; }
 .brief-meta { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 10px; margin: 16px 0 0; font-size: 15px; color: var(--muted); }
 
-.toc { position: sticky; top: 73px; z-index: 4; background: rgba(250, 248, 245, 0.96); border-bottom: 1px solid var(--line); }
-.toc-row { display: flex; gap: 8px; overflow-x: auto; padding-top: 12px; padding-bottom: 12px; scrollbar-width: thin; }
+.toc { background: rgba(250, 248, 245, 0.96); border-bottom: 1px solid var(--line); }
+/* All section chips stay visible: they wrap onto extra rows instead of scrolling sideways */
+.toc-row { display: flex; flex-wrap: wrap; gap: 8px; padding-top: 12px; padding-bottom: 12px; }
 .chip {
-  flex: none; display: inline-flex; align-items: center; min-height: 36px; padding: 0 14px;
+  flex: 0 1 auto; max-width: 100%; display: inline-flex; align-items: center; min-height: 36px; padding: 6px 14px; line-height: 1.25;
   border-radius: 999px; border: 1px solid var(--line-strong); background: var(--surface);
-  color: var(--ink); font-size: 14px; font-weight: 500; text-decoration: none; white-space: nowrap;
+  color: var(--ink); font-size: 14px; font-weight: 500; text-decoration: none;
 }
 .chip:hover { border-color: var(--purple); color: var(--purple); }
 /* Topic colours: each section has its own accent, tint and icon so sections are easy to tell apart */
@@ -274,7 +275,8 @@ p.field.act .label { background: var(--ink); color: var(--gold); }
   .header-row { padding-top: 12px; padding-bottom: 12px; }
   .brand-mark { font-size: 19px; }
   .nav { gap: 0 18px; font-size: 14px; }
-  .toc { top: 0; position: relative; }
+  .toc-row { gap: 6px; }
+  .chip { padding: 6px 12px; font-size: 13px; }
   .hero .wrap { padding-top: 48px; padding-bottom: 56px; }
   .latest-card { padding: 24px 20px; }
   .latest-top3, .sec-top3, .sec-talking { padding: 20px; }
@@ -282,6 +284,22 @@ p.field.act .label { background: var(--ink); color: var(--gold); }
   .btn { flex: 1 1 100%; }
   .pager { grid-template-columns: 1fr; }
   .pager-link.next { grid-column: 1; text-align: left; }
+}
+
+/* Fluid layout: content follows the window width and never forces sideways scrolling */
+html { -webkit-text-size-adjust: 100%; }
+img, svg, video, table { max-width: 100%; }
+.brief-body, .card, .sec { min-width: 0; overflow-wrap: anywhere; }
+.brief-body table { display: block; overflow-x: auto; }
+@media (min-width: 641px) and (max-width: 900px) {
+  .wrap { padding-left: 24px; padding-right: 24px; }
+}
+@media (max-width: 380px) {
+  body { font-size: 15.5px; }
+  .wrap { padding-left: 12px; padding-right: 12px; }
+  .brand { gap: 8px; }
+  .brand-mark { font-size: 17px; }
+  .btn { padding: 0 16px; }
 }
 
 @media (prefers-reduced-motion: reduce) {
