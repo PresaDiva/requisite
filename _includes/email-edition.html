@@ -126,17 +126,24 @@
     {%- assign hp = ch | split: "</strong></p>" -%}
     {%- assign headline = hp[0] | strip -%}
     {%- assign paras = hp | slice: 1, 99 | join: "</strong></p>" | split: "<p>" -%}
-    {%- assign summary = "" -%}{%- assign why = "" -%}{%- assign source = "" -%}
+    {%- assign summary = "" -%}{%- assign why = "" -%}{%- assign source = "" -%}{%- assign fields = "" -%}{%- assign labels = "What happened|Who could be affected and how|Actions to take|Suggested" -%}
     {%- for p in paras -%}
       {%- assign txt = p | split: "</p>" | first | strip -%}
       {%- if txt == "" -%}{%- continue -%}{%- endif -%}
       {%- assign lead15 = txt | slice: 0, 15 -%}
       {%- assign lead7 = txt | slice: 0, 7 -%}
+      {%- assign lead_label = txt | split: ":" | first -%}
       {%- if lead15 == "Why it matters:" -%}
         {%- assign w = txt | remove_first: "Why it matters:" | strip -%}
         {%- assign why = w | slice: 0 | upcase | append: "" -%}{%- assign wrest = w | slice: 1, 100000 -%}{%- assign why = why | append: wrest -%}
       {%- elsif lead7 == "Source:" -%}
         {%- assign source = txt | remove_first: "Source:" | strip -%}
+      {%- elsif txt contains ":" and labels contains lead_label -%}
+        {%- assign flabel = txt | split: ":" | first -%}
+        {%- assign fbody = txt | remove_first: flabel | remove_first: ":" | strip -%}
+        {%- if flabel == "Actions to take" -%}{%- assign fbg = "#1E1A24" -%}{%- assign fcol = "#F2C14E" -%}{%- else -%}{%- assign fbg = t.tint -%}{%- assign fcol = t.accent -%}{%- endif -%}
+        {%- capture fcell -%}<div style="padding-top:12px;"><span style="display:inline-block;background:{{ fbg }};color:{{ fcol }};font-family:{{ HEAD }};font-weight:800;font-size:12px;line-height:16px;padding:3px 10px;border-radius:999px;">{{ flabel }}</span><div style="font-family:{{ BODY }};font-size:15px;line-height:24px;color:#3F3B45;padding-top:6px;">{{ fbody }}</div></div>{%- endcapture -%}
+        {%- assign fields = fields | append: fcell -%}
       {%- else -%}
         {%- if summary != "" -%}{%- assign summary = summary | append: "<br><br>" -%}{%- endif -%}
         {%- assign summary = summary | append: txt -%}
@@ -170,6 +177,7 @@
           <tr><td style="padding:18px 18px 16px 16px;">
             <div style="font-family:{{ HEAD }};font-weight:800;font-size:19px;line-height:25px;color:#1E1A24;">{{ headline }}</div>
             <div style="font-family:{{ BODY }};font-size:15px;line-height:24px;color:#3F3B45;padding-top:8px;">{{ summary | replace: "<a ", lk | replace: "<code>", codestyle | replace: "<strong>", '<strong style="color:#1E1A24;">' }}</div>
+            {%- if fields != "" %}{{ fields | replace: "<a ", lk | replace: "<code>", codestyle }}{%- endif %}
             {%- if why != "" %}
             <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin:14px 0 0 0;">
               <tr><td style="background:{{ t.tint }};border-radius:8px;padding:11px 14px 12px 14px;">

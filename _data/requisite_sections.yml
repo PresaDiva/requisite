@@ -43,3 +43,10 @@
   tint: "#FBEEE8"
   rule: "#EFCFC0"
   note: Credible research and reporting outside the headlines
+- match: "security"
+  key: security
+  short: Security
+  accent: "#8A6400"
+  tint: "#FDF4DA"
+  rule: "#F0DFA8"
+  note: Breaches, vulnerabilities, enforcement and deadlines to act on
