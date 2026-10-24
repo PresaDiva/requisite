@@ -80,4 +80,4 @@ layout: default
   </ul>
   {%- endfor %}
 </section>
-<script src="{{ "/assets/js/archive.js" | relative_url }}" defer></script>
+<script src="{{ "/assets/js/archive.js" | relative_url }}?v={{ site.time | date: "%s" }}" defer></script>
