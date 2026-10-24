@@ -6,8 +6,9 @@
   survives email clients. Section names, accents, icons and descriptors live in
   _data/requisite_sections.yml. Icons and the masthead live in assets/img/.
 
-  Look: each section is a full-width band of page background. Bands alternate
-  between two light brand tones (lilac, sand); security always sits on dark ink.
+  Look: each section is a full-width band of page background with a bold ink rule
+  across its top. Bands alternate between two muted tones (grey-lilac, grey-sand).
+  Only the footer is dark, so dark always means the end.
   Story cards are white. A section's own colour shows only in its icon tile, tag
   and story number.
 {%- endcomment -%}
@@ -16,7 +17,8 @@
 {%- assign MONO = "'JetBrains Mono',Menlo,Consolas,'Courier New',monospace" -%}
 {%- assign PAPER = "#FAF8F5" -%}
 {%- assign INK = "#1E1A24" -%}
-{%- assign TONES = "#EEE7F1|#F3EDE3" | split: "|" -%}
+{%- assign TONES = "#F1EEF2|#F3F0EA" | split: "|" -%}
+{%- assign RULE = "border-top:3px solid #1E1A24;" -%}
 {%- assign themes = site.data.requisite_sections -%}
 {%- assign img_base = "/assets/img/" | absolute_url -%}
 {%- assign icon_base = "/assets/img/icons/" | absolute_url -%}
@@ -126,13 +128,10 @@
   {%- assign n = chunks | size | minus: 1 -%}
 
   {%- comment -%} Pick this band's background, title and secondary text colours {%- endcomment -%}
-  {%- if is_talk or t.key == "security" -%}
-    {%- assign bg = INK -%}{%- assign fg = "#FFFFFF" -%}{%- assign sub = "#BDB4C2" -%}{%- assign lab = "#F2C14E" -%}{%- assign card_border = INK -%}
-  {%- else -%}
-    {%- assign ti = tone_i | modulo: 2 -%}
-    {%- assign bg = TONES[ti] -%}{%- assign tone_i = tone_i | plus: 1 -%}
-    {%- assign fg = INK -%}{%- assign sub = "#5E5866" -%}{%- assign lab = t.accent -%}{%- assign card_border = "#E3DCE6" -%}
-  {%- endif -%}
+  {%- assign ti = tone_i | modulo: 2 -%}
+  {%- assign bg = TONES[ti] -%}{%- assign tone_i = tone_i | plus: 1 -%}
+  {%- assign fg = INK -%}{%- assign sub = "#5E5866" -%}{%- assign card_border = "#E3DCE6" -%}
+  {%- if t.key == "security" -%}{%- assign lab = "#8A6A12" -%}{%- else -%}{%- assign lab = t.accent -%}{%- endif -%}
 
   {%- if is_talk -%}
     {%- for ch in chunks offset: 1 -%}
@@ -147,22 +146,24 @@
         {%- if lead7 == "Source:" -%}{%- assign source = txt | remove_first: "Source:" | strip -%}
         {%- else -%}{%- if summary != "" -%}{%- assign summary = summary | append: "<br><br>" -%}{%- endif -%}{%- assign summary = summary | append: txt -%}{%- endif -%}
       {%- endfor -%}
-      {%- assign lk = '<a target="_blank" rel="noopener noreferrer" style="color:#FFFFFF;text-decoration:underline;text-decoration-color:#F2C14E;" ' -%}
-  <tr><td style="background:{{ INK }};padding:44px 22px 46px 22px;">{{ OPEN }}<tr><td>
+      {%- assign lk = '<a target="_blank" rel="noopener noreferrer" style="color:#6E3580;text-decoration:underline;" ' -%}
+  <tr><td style="background:{{ bg }};{{ RULE }}padding:44px 22px 46px 22px;">{{ OPEN }}<tr><td>
+    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#FFFFFF;border:1px solid #E3DCE6;border-top:3px solid #F2C14E;border-radius:6px;"><tr><td style="padding:22px 22px 22px 22px;">
     <table role="presentation" cellpadding="0" cellspacing="0"><tr>
       <td valign="middle" style="padding:0 12px 0 0;"><img src="{{ icon_base }}talking.png" width="40" height="40" alt="" style="display:block;border:0;width:40px;height:40px;"></td>
-      <td valign="middle" style="font-family:{{ MONO }};font-weight:500;font-size:11px;line-height:16px;letter-spacing:2px;text-transform:uppercase;color:#F2C14E;">{{ name }}</td>
+      <td valign="middle" style="font-family:{{ MONO }};font-weight:500;font-size:11px;line-height:16px;letter-spacing:2px;text-transform:uppercase;color:#8A6A12;">{{ name }}</td>
     </tr></table>
-    <div style="font-family:{{ HEAD }};font-weight:800;font-size:26px;line-height:33px;letter-spacing:-0.6px;color:#FFFFFF;padding-top:16px;">{{ headline }}</div>
-    <div style="font-family:{{ BODY }};font-size:16px;line-height:26px;color:#E4DEE7;padding-top:12px;">{{ summary | replace: "<a ", lk }}</div>
+    <div style="font-family:{{ HEAD }};font-weight:800;font-size:26px;line-height:33px;letter-spacing:-0.6px;color:{{ INK }};padding-top:16px;">{{ headline }}</div>
+    <div style="font-family:{{ BODY }};font-size:16px;line-height:26px;color:#3B3440;padding-top:12px;">{{ summary | replace: "<a ", lk }}</div>
     {%- if source != "" %}
-    <div style="border-top:1px solid #3B3440;margin-top:20px;padding-top:14px;font-family:{{ BODY }};font-size:14px;line-height:21px;color:#D9D2DC;"><span style="font-family:{{ MONO }};font-weight:500;font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:#F2C14E;">Source</span>&nbsp; {{ source | replace: "<a ", lk }}</div>
+    <div style="border-top:1px solid #DDD5E0;margin-top:20px;padding-top:14px;font-family:{{ BODY }};font-size:14px;line-height:21px;color:#4A4350;"><span style="font-family:{{ MONO }};font-weight:500;font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:{{ INK }};">Source</span>&nbsp; {{ source | replace: "<a ", lk }}</div>
     {%- endif %}
+    </td></tr></table>
   </td></tr>{{ CLOSE }}</td></tr>
     {%- endfor -%}
   {%- else -%}
   {%- assign sec_no = sec_no | plus: 1 -%}
-  <tr><td id="{{ name | slugify | prepend: 's-' }}" style="background:{{ bg }};padding:44px 22px 40px 22px;">{{ OPEN }}
+  <tr><td id="{{ name | slugify | prepend: 's-' }}" style="background:{{ bg }};{{ RULE }}padding:44px 22px 40px 22px;">{{ OPEN }}
     <tr><td style="padding:0 0 22px 0;">
       <table role="presentation" width="100%" cellpadding="0" cellspacing="0"><tr>
         <td align="left" style="font-family:{{ MONO }};font-weight:500;font-size:11px;line-height:16px;letter-spacing:1.5px;text-transform:uppercase;color:{{ lab }};">{% if sec_no < 10 %}0{% endif %}{{ sec_no }} / {{ t.short }}</td>
@@ -211,7 +212,7 @@
     {%- capture lk %}<a target="_blank" rel="noopener noreferrer" style="color:{{ linkc }};text-decoration:underline;" {% endcapture -%}
     {%- assign codestyle = '<code style="font-family:Menlo,Consolas,monospace;font-size:13px;background:#F2EEF3;color:#1E1A24;padding:1px 5px;border-radius:3px;">' -%}
     <tr><td style="padding:0 0 12px 0;">
-      <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#FFFFFF;border:1px solid {{ card_border }};border-radius:6px;">
+      <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#FFFFFF;border:1px solid {{ card_border }};border-top:3px solid {{ t.accent }};border-radius:6px;">
         <tr><td style="padding:20px 22px 22px 22px;">
           <table role="presentation" width="100%" cellpadding="0" cellspacing="0"><tr>
             <td align="left" style="font-family:{{ MONO }};font-weight:500;font-size:12px;line-height:20px;letter-spacing:1.5px;color:{{ numc }};">NO. {% if story_no < 10 %}0{% endif %}{{ story_no }}</td>
@@ -235,7 +236,7 @@
   {%- endif -%}
 {%- endfor %}
 
-  <tr><td style="background:{{ PAPER }};padding:40px 22px 40px 22px;">{{ OPEN }}<tr><td style="border-top:1px solid {{ INK }};padding-top:20px;">
+  <tr><td style="background:{{ PAPER }};{{ RULE }}padding:36px 22px 40px 22px;">{{ OPEN }}<tr><td>
     <div style="font-family:{{ HEAD }};font-weight:800;font-size:19px;line-height:26px;letter-spacing:-0.3px;color:{{ INK }};">Know someone who keeps nodding along in meetings?</div>
     <div style="font-family:{{ BODY }};font-size:15px;line-height:23px;color:#5E5866;padding-top:6px;">Forward this to them. Plain-English news on data and AI, in five minutes.</div>
   </td></tr>{{ CLOSE }}</td></tr>

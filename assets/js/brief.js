@@ -165,12 +165,10 @@
     }
   });
 
-  // Full-width page background per section: light sections alternate two tones,
-  // security and the talking point sit on dark ink.
+  // Full-width page background per section: sections alternate two muted tones.
   var tone = 0;
   sections.forEach(function (s) {
     if (s.kind === 'top3' || s.kind === 'checks') return;
-    if (s.kind === 'security' || s.kind === 'talking') { s.el.setAttribute('data-tone', 'dark'); return; }
     s.el.setAttribute('data-tone', tone % 2 === 0 ? 'a' : 'b');
     tone++;
   });

@@ -260,7 +260,7 @@ p.field.act .label { background: var(--ink); color: var(--gold); }
 .nav .nav-cta:hover { background: var(--purple-dark); color: #FFFFFF; }
 
 /* Pager */
-.pager { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; padding-top: 8px; padding-bottom: 24px; }
+.pager { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; padding-top: 40px; padding-bottom: 24px; }
 .pager-link {
   display: flex; flex-direction: column; gap: 4px; padding: 16px 20px; border: 1px solid var(--line);
   border-radius: var(--radius); background: var(--surface); text-decoration: none; color: var(--text);
@@ -299,6 +299,7 @@ p.field.act .label { background: var(--ink); color: var(--gold); }
 
 /* Fluid layout: content follows the window width and never forces sideways scrolling */
 html { -webkit-text-size-adjust: 100%; }
+html, body { overflow-x: clip; }
 img, svg, video, table { max-width: 100%; }
 .brief-body, .card, .sec { min-width: 0; overflow-wrap: anywhere; }
 .brief-body table { display: block; overflow-x: auto; }
@@ -383,14 +384,16 @@ h1, h2, h3 { letter-spacing: -0.02em; }
 .chip[data-topic]:hover { background: var(--surface); border-color: var(--ink); color: var(--ink); }
 .chip-dot { width: 10px; height: 10px; border: 0; border-radius: 2px; background: var(--accent, var(--purple)); }
 
-/* Sections: the full-width page background changes with each section.
-   Light sections alternate lilac and sand (set by brief.js); security and the
-   talking point sit on dark ink. The section's own colour is only an accent. */
+/* Sections: the full-width page background changes with each section, and a bold
+   ink rule runs across the top of each one. Backgrounds alternate two muted tones
+   (set by brief.js). Only the footer is dark. The section colour is only an accent. */
 .sec { margin: 0; padding: 56px 0 48px; }
-.sec[data-tone] { background: var(--tone); box-shadow: 0 0 0 100vmax var(--tone); clip-path: inset(0 -100vmax); }
-.sec[data-tone="a"] { --tone: #EEE7F1; }
-.sec[data-tone="b"] { --tone: #F3EDE3; }
-.sec[data-tone="dark"] { --tone: #1E1A24; --head-fg: #FFFFFF; --head-sub: #BDB4C2; --head-lab: #F2C14E; }
+.sec[data-tone] { position: relative; background: var(--tone); box-shadow: 0 0 0 100vmax var(--tone); clip-path: inset(0 -100vmax); }
+.sec[data-tone]::before { content: ""; position: absolute; top: 0; left: -100vmax; right: -100vmax; height: 3px; background: var(--ink); }
+.sec[data-tone]:last-child::after { content: ""; position: absolute; bottom: 0; left: -100vmax; right: -100vmax; height: 3px; background: var(--ink); }
+.sec[data-tone="a"] { --tone: #F1EEF2; }
+.sec[data-tone="b"] { --tone: #F3F0EA; }
+.sec-security { --head-lab: #8A6A12; }
 .sec-head { display: flex; align-items: flex-start; gap: 16px; background: transparent; border: 0; border-radius: 0; padding: 30px 0 24px; margin: 0; position: relative; }
 .sec-icon { display: inline-flex; flex: none; width: 48px; height: 48px; border-radius: 8px; background: var(--accent); color: var(--on); border: 0; }
 .sec-icon svg { width: 24px; height: 24px; }
@@ -412,8 +415,7 @@ h1, h2, h3 { letter-spacing: -0.02em; }
 .sec-top3 a:hover { color: var(--gold); }
 
 /* Story cards: white, hairline border, mono number and a small tinted tag */
-.card { background: var(--surface); border: 1px solid #E3DCE6; border-radius: 6px; padding: 22px 26px 24px; margin: 0 0 12px; }
-.sec[data-tone="dark"] .card { border-color: var(--ink); }
+.card { background: var(--surface); border: 1px solid #E3DCE6; border-top: 3px solid var(--accent, var(--ink)); border-radius: 6px; padding: 22px 26px 24px; margin: 0 0 12px; }
 .sec .card:last-child { margin-bottom: 0; }
 .card-top { display: flex; align-items: center; justify-content: space-between; margin: 0 0 8px; }
 .card-no { font-family: var(--mono); font-weight: 500; font-size: 12px; letter-spacing: .12em; color: var(--accent-dark); }
@@ -432,20 +434,14 @@ p.field.act { background: #F6F3F7; border-left: 3px solid var(--accent); border-
 p.field.act .label { display: block; background: transparent; padding: 0; color: var(--ink); font-family: var(--mono); font-weight: 500; font-size: 11px; letter-spacing: .14em; text-transform: uppercase; margin: 0 0 4px; }
 p.field.act .label::after { content: ""; }
 
-/* Talking point: dark card */
-.sec-talking { color: #E4DEE7; }
+/* Talking point: sits on its band like other sections, no card box */
+.sec-talking { --head-lab: #8A6A12; }
 .sec-talking .sec-head { padding: 30px 0 16px; }
-
-.sec-talking .sec-count { display: none; }
-.sec-talking .sec-kicker { color: var(--gold); }
-.sec-talking .sec-title { color: #FFFFFF; }
-.sec-talking .sec-blurb { color: #BDB4C2; }
-.sec-talking .card { background: transparent; border: 0; border-radius: 0; padding: 0 0 16px; margin: 0; }
-.sec-talking .card-title, .sec-talking .card-title strong { color: #FFFFFF; font-size: clamp(21px, 2.6vw, 25px); }
-.sec-talking .card a { color: #FFFFFF; text-decoration-color: var(--gold); }
-.sec-talking .card p, .sec-talking p.source { color: #D9D2DC; }
-.sec-talking p.source { border-top: 1px solid #3B3440; padding-top: 14px; }
-.sec-talking p.source .label { color: var(--gold); }
+.sec-talking .card { padding: 22px 26px 24px; margin: 0; }
+.sec-talking .card-title, .sec-talking .card-title strong { color: var(--ink); font-size: clamp(20px, 2.4vw, 24px); }
+.sec-talking .card p { color: #3B3440; }
+.sec-talking .card a { color: var(--purple-dark); }
+.sec-talking p.source { border-top: 1px solid #DDD5E0; padding-top: 14px; color: var(--muted); }
 
 /* Subscribe band: dark, like the site's closing call to action */
 .subscribe { background: var(--ink); border: 0; color: #FFFFFF; }
