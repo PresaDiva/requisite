@@ -38,7 +38,7 @@
     {%- assign linkmap = linkmap | append: u | append: "::" | append: t.key | append: "||" -%}
   {%- endfor -%}
   {%- assign sid = name | slugify | prepend: "s-" -%}
-  {%- capture cell -%}<a href="#{{ sid }}" style="color:#1E1A24;text-decoration:none;white-space:nowrap;"><span style="color:{{ t.bar }};font-size:13px;">&#9679;</span>&nbsp;{{ t.short }}</a>{%- endcapture -%}
+  {%- capture cell -%}<a href="#{{ sid }}" style="color:#1E1A24;text-decoration:none;white-space:nowrap;"><span style="display:inline-block;width:8px;height:8px;background:{{ t.band }};border-radius:2px;"></span>&nbsp;{{ t.short }}</a>{%- endcapture -%}
   {%- if ticker != "" -%}{%- assign ticker = ticker | append: ' <span style="color:#CFC5D3;">/</span> ' -%}{%- endif -%}
   {%- assign ticker = ticker | append: cell -%}
 {%- endfor -%}
@@ -49,7 +49,7 @@
 <!--[if mso]><table role="presentation" width="640" align="center" cellpadding="0" cellspacing="0"><tr><td><![endif]-->
 <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="width:100%;max-width:640px;margin:0 auto;background:#FAF8F5;">
 
-  <tr><td style="background:#1E1A24;border-radius:14px 14px 0 0;padding:14px 22px;">
+  <tr><td style="background:#1E1A24;border-radius:8px 8px 0 0;padding:14px 22px;">
     <table role="presentation" width="100%" cellpadding="0" cellspacing="0"><tr>
       <td align="left" style="font-family:{{ HEAD }};font-weight:700;font-size:15px;line-height:20px;color:#FFFFFF;"><a target="_blank" rel="noopener noreferrer" href="{{ site.studio_url }}" style="color:#FFFFFF;text-decoration:none;">ReQu Studio</a></td>
       <td align="right" style="font-family:{{ MONO }};font-size:12px;line-height:20px;letter-spacing:1px;text-transform:uppercase;"><a target="_blank" rel="noopener noreferrer" href="{{ include.post.url | absolute_url }}" style="color:#F2C14E;text-decoration:none;">Read on the web &rarr;</a></td>
@@ -86,7 +86,7 @@
 
   {%- if lname contains "top 3" -%}
   <tr><td style="padding:22px 22px 8px 22px;">
-    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#1E1A24;border-radius:12px;">
+    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#1E1A24;border-radius:8px;">
       <tr><td style="padding:24px 24px 6px 24px;">
         <div style="font-family:{{ MONO }};font-weight:500;font-size:12px;line-height:18px;letter-spacing:2px;text-transform:uppercase;color:#F2C14E;padding-bottom:6px;">{{ name }}</div>
         <div style="font-family:{{ HEAD }};font-weight:800;font-size:22px;line-height:28px;letter-spacing:-0.4px;color:#FFFFFF;padding-bottom:18px;">If you read nothing else</div>
@@ -107,7 +107,7 @@
           <tr>
             <td valign="top" style="width:40px;padding:0 0 22px 0;font-family:{{ MONO }};font-weight:500;font-size:22px;line-height:28px;color:#F2C14E;">{{ forloop.index }}</td>
             <td valign="top" style="padding:0 0 22px 0;font-family:{{ BODY }};font-size:16px;line-height:25px;color:#FFFFFF;">
-              {%- for th in themes -%}{%- if th.key == tkey -%}<span style="display:inline-block;color:#BDB4C2;font-family:{{ MONO }};font-weight:500;font-size:11px;line-height:16px;letter-spacing:1.5px;text-transform:uppercase;padding-bottom:4px;"><span style="color:{{ th.bar }};font-size:12px;">&#9679;</span>&nbsp;{{ th.short }}</span><br>{%- endif -%}{%- endfor -%}
+              {%- for th in themes -%}{%- if th.key == tkey -%}<span style="display:inline-block;color:#BDB4C2;font-family:{{ MONO }};font-weight:500;font-size:11px;line-height:16px;letter-spacing:1.5px;text-transform:uppercase;padding-bottom:4px;"><span style="display:inline-block;width:8px;height:8px;background:{{ th.band }};border-radius:2px;"></span>&nbsp;{{ th.short }}</span><br>{%- endif -%}{%- endfor -%}
               {{ text }}</td>
           </tr>
         {%- endfor %}
@@ -126,17 +126,21 @@
 
   {%- unless is_talk %}
   {%- assign sec_no = sec_no | plus: 1 -%}
-  <tr><td id="{{ name | slugify | prepend: 's-' }}" style="padding:48px 22px 14px 22px;">
-    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:{{ t.band }};border-top:3px solid {{ t.bar }};border-radius:0 0 12px 12px;">
+  <tr><td id="{{ name | slugify | prepend: 's-' }}" style="padding:44px 22px 0 22px;">
+    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:{{ t.band }};border-radius:8px 8px 0 0;">
       <tr>
-        <td valign="top" style="width:48px;padding:18px 0 18px 18px;"><img src="{{ icon_base }}{{ t.key }}.png" width="48" height="48" alt="" style="display:block;border:0;width:48px;height:48px;"></td>
-        <td valign="top" style="padding:18px 18px 18px 16px;">
+        <td valign="top" style="padding:22px 22px 20px 22px;">
           <table role="presentation" width="100%" cellpadding="0" cellspacing="0"><tr>
-            <td align="left" style="font-family:{{ MONO }};font-weight:500;font-size:11px;line-height:16px;letter-spacing:1.5px;text-transform:uppercase;color:{{ t.accent }};">Section {% if sec_no < 10 %}0{% endif %}{{ sec_no }} / {{ t.short }}</td>
-            <td align="right" style="font-family:{{ MONO }};font-weight:500;font-size:11px;line-height:16px;letter-spacing:1.5px;text-transform:uppercase;color:#5E5866;white-space:nowrap;">{{ n }} {% if n == 1 %}story{% else %}stories{% endif %}</td>
+            <td align="left" valign="middle" style="font-family:{{ MONO }};font-weight:500;font-size:11px;line-height:16px;letter-spacing:1.5px;text-transform:uppercase;color:{{ t.sub }};">{% if sec_no < 10 %}0{% endif %}{{ sec_no }} / {{ t.short }}</td>
+            <td align="right" valign="middle" style="font-family:{{ MONO }};font-weight:500;font-size:11px;line-height:16px;letter-spacing:1.5px;text-transform:uppercase;color:{{ t.sub }};white-space:nowrap;">{{ n }} {% if n == 1 %}story{% else %}stories{% endif %}</td>
           </tr></table>
-          <div style="font-family:{{ HEAD }};font-weight:800;font-size:24px;line-height:30px;letter-spacing:-0.5px;color:#1E1A24;padding-top:4px;">{{ name }}</div>
-          <div style="font-family:{{ BODY }};font-size:15px;line-height:22px;color:#4A4350;padding-top:2px;">{{ t.note }}</div>
+          <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin-top:14px;"><tr>
+            <td valign="top" style="width:44px;padding:2px 14px 0 0;"><img src="{{ icon_base }}{{ t.key }}.png" width="44" height="44" alt="" style="display:block;border:0;width:44px;height:44px;"></td>
+            <td valign="top">
+              <div style="font-family:{{ HEAD }};font-weight:800;font-size:27px;line-height:32px;letter-spacing:-0.7px;color:{{ t.ink }};">{{ name }}</div>
+              <div style="font-family:{{ BODY }};font-size:15px;line-height:22px;color:{{ t.sub }};padding-top:4px;">{{ t.note }}</div>
+            </td>
+          </tr></table>
         </td>
       </tr>
     </table>
@@ -163,7 +167,7 @@
         {%- assign flabel = txt | split: ":" | first -%}
         {%- assign fbody = txt | remove_first: flabel | remove_first: ":" | strip -%}
         {%- if flabel == "Actions to take" -%}
-          {%- capture fcell -%}<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin:14px 0 0 0;"><tr><td style="background:#FBF6E6;border-left:3px solid #F2C14E;border-radius:0 8px 8px 0;padding:13px 16px 14px 16px;"><div style="font-family:{{ MONO }};font-weight:500;font-size:11px;line-height:16px;letter-spacing:1.5px;text-transform:uppercase;color:#1E1A24;padding-bottom:5px;">{{ flabel }}</div><div style="font-family:{{ BODY }};font-size:15px;line-height:24px;color:#1E1A24;">{{ fbody }}</div></td></tr></table>{%- endcapture -%}
+          {%- capture fcell -%}<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin:14px 0 0 0;"><tr><td style="background:#F6F3F7;border-left:3px solid {{ t.band }};border-radius:0 4px 4px 0;padding:13px 16px 14px 16px;"><div style="font-family:{{ MONO }};font-weight:500;font-size:11px;line-height:16px;letter-spacing:1.5px;text-transform:uppercase;color:#1E1A24;padding-bottom:5px;">{{ flabel }}</div><div style="font-family:{{ BODY }};font-size:15px;line-height:24px;color:#1E1A24;">{{ fbody }}</div></td></tr></table>{%- endcapture -%}
         {%- else -%}
           {%- capture fcell -%}<div style="padding-top:12px;font-family:{{ BODY }};font-size:15px;line-height:24px;color:#3B3440;"><strong style="font-family:{{ HEAD }};font-weight:800;color:#1E1A24;">{{ flabel }}:</strong> {{ fbody }}</div>{%- endcapture -%}
         {%- endif -%}
@@ -177,7 +181,7 @@
     {%- if is_talk -%}
       {%- assign lk = '<a target="_blank" rel="noopener noreferrer" style="color:#F2C14E;text-decoration:underline;" ' -%}
   <tr><td style="padding:44px 22px 0 22px;">
-    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#1E1A24;border-radius:12px;">
+    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#1E1A24;border-radius:8px;">
       <tr>
         <td style="padding:26px 26px 26px 26px;">
           <table role="presentation" cellpadding="0" cellspacing="0"><tr>
@@ -197,14 +201,15 @@
       {%- assign story_no = story_no | plus: 1 -%}
       {%- capture lk %}<a target="_blank" rel="noopener noreferrer" style="color:{{ t.accent }};text-decoration:underline;" {% endcapture -%}
       {%- assign codestyle = '<code style="font-family:Menlo,Consolas,monospace;font-size:13px;background:#F2EEF3;color:#1E1A24;padding:1px 5px;border-radius:4px;">' -%}
-  <tr><td style="padding:0 22px 14px 22px;">
-    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#FFFFFF;border:1px solid #E6E0E8;border-left:4px solid {{ t.bar }};border-radius:12px;">
-      <tr><td style="padding:20px 22px 22px 20px;">
+  <tr><td style="padding:0 22px;">
+    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:{{ t.band }};"><tr><td style="padding:0 12px 12px 12px;">
+    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#FFFFFF;border-radius:6px;">
+      <tr><td style="padding:20px 20px 22px 20px;">
         <table role="presentation" width="100%" cellpadding="0" cellspacing="0"><tr>
-          <td align="left" style="font-family:{{ MONO }};font-weight:500;font-size:12px;line-height:20px;letter-spacing:1.5px;color:#5E5866;">NO. {% if story_no < 10 %}0{% endif %}{{ story_no }}</td>
-          <td align="right"><span style="display:inline-block;border:1px solid {{ t.rule }};background:{{ t.tint }};color:{{ t.accent }};font-family:{{ MONO }};font-weight:500;font-size:10px;line-height:14px;letter-spacing:1.5px;text-transform:uppercase;padding:3px 9px;border-radius:999px;">{{ t.short }}</span></td>
+          <td align="left" style="font-family:{{ MONO }};font-weight:500;font-size:12px;line-height:20px;letter-spacing:1.5px;color:{{ t.accent }};">NO. {% if story_no < 10 %}0{% endif %}{{ story_no }}</td>
+          <td align="right"><span style="display:inline-block;background:{{ t.band }};color:{{ t.ink }};font-family:{{ MONO }};font-weight:500;font-size:10px;line-height:14px;letter-spacing:1.5px;text-transform:uppercase;padding:3px 8px;border-radius:3px;">{{ t.short }}</span></td>
         </tr></table>
-        <div style="font-family:{{ HEAD }};font-weight:800;font-size:22px;line-height:29px;letter-spacing:-0.4px;color:#1E1A24;padding-top:10px;">{{ headline }}</div>
+        <div style="font-family:{{ HEAD }};font-weight:800;font-size:21px;line-height:28px;letter-spacing:-0.4px;color:#1E1A24;padding-top:10px;">{{ headline }}</div>
         <div style="font-family:{{ BODY }};font-size:16px;line-height:26px;color:#3B3440;padding-top:10px;">{{ summary | replace: "<a ", lk | replace: "<code>", codestyle | replace: "<strong>", '<strong style="color:#1E1A24;">' }}</div>
         {%- if fields != "" %}{{ fields | replace: "<a ", lk | replace: "<code>", codestyle }}{%- endif %}
         {%- if why != "" %}
@@ -215,14 +220,18 @@
         {%- endif %}
       </td></tr>
     </table>
+    </td></tr></table>
   </td></tr>
     {%- endif -%}
   {%- endfor -%}
+  {%- unless is_talk %}
+  <tr><td style="padding:0 22px;"><div style="height:8px;background:{{ t.band }};border-radius:0 0 8px 8px;font-size:0;line-height:0;">&nbsp;</div></td></tr>
+  {%- endunless -%}
   {%- endif -%}
 {%- endfor %}
 
   <tr><td style="padding:40px 22px 0 22px;">
-    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#FFFFFF;border:1px solid #E6E0E8;border-top:3px solid #F2C14E;border-radius:12px;"><tr>
+    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#FFFFFF;border:1px solid #E6E0E8;border-top:3px solid #F2C14E;border-radius:8px;"><tr>
       <td style="padding:22px 24px;">
         <div style="font-family:{{ HEAD }};font-weight:800;font-size:19px;line-height:26px;letter-spacing:-0.3px;color:#1E1A24;">Know someone who keeps nodding along in meetings?</div>
         <div style="font-family:{{ BODY }};font-size:15px;line-height:23px;color:#5E5866;padding-top:6px;">Forward this to them. Plain-English news on data and AI, in five minutes.</div>
@@ -231,12 +240,12 @@
   </td></tr>
 
   <tr><td style="padding:22px 22px 0 22px;">
-    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#1E1A24;border-radius:12px;"><tr>
+    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#1E1A24;border-radius:8px;"><tr>
       <td style="padding:26px 26px 28px 26px;font-family:{{ BODY }};font-size:14px;line-height:22px;color:#D9D2DC;">
         <div style="font-family:{{ HEAD }};font-weight:800;font-size:18px;line-height:24px;color:#FFFFFF;">Every request has a person behind it.</div>
         <div style="padding-top:8px;">Curated by Chelsea Wilson at <a target="_blank" rel="noopener noreferrer" href="{{ site.studio_url }}" style="color:#F2C14E;">ReQu Studio</a>. Every item links to its original source, and summaries state only what the source says.</div>
         <table role="presentation" cellpadding="0" cellspacing="0" style="margin-top:18px;"><tr>
-          <td style="background:#914AA1;border-radius:10px;"><a target="_blank" rel="noopener noreferrer" href="{{ include.post.url | absolute_url }}" style="display:inline-block;padding:12px 22px;font-family:{{ BODY }};font-weight:600;font-size:15px;line-height:20px;color:#FFFFFF;text-decoration:none;">Read on the web</a></td>
+          <td style="background:#914AA1;border-radius:6px;"><a target="_blank" rel="noopener noreferrer" href="{{ include.post.url | absolute_url }}" style="display:inline-block;padding:12px 22px;font-family:{{ BODY }};font-weight:600;font-size:15px;line-height:20px;color:#FFFFFF;text-decoration:none;">Read on the web</a></td>
           <td style="padding-left:14px;"><a target="_blank" rel="noopener noreferrer" href="{{ "/" | absolute_url }}" style="font-family:{{ MONO }};font-size:12px;letter-spacing:1px;text-transform:uppercase;color:#F2C14E;text-decoration:none;">All ReQuisites &rarr;</a></td>
         </tr></table>
       </td>

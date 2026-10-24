@@ -29,7 +29,7 @@ The daily task may add an optional "## Off the beaten path" section for credible
 
 ### Look and feel
 
-The email and the website share one restrained brand language taken from requstudio.com: warm paper background, ink header bar, Manrope headlines, mono labels, white cards with hairline borders, and gold used sparingly (masthead rule, Top 3 numbers, action boxes). Each section opens with a light tinted header band, a line icon and a coloured top rule, and every card in it carries a coloured left edge, so readers can see where one section ends and the next begins. The email masthead is an image (`assets/img/masthead.png`) so it looks the same in every mail app. Section colours are in `_data/requisite_sections.yml` (email) and the `[data-topic]` rules in `assets/css/brief.css` (site); keep the two in step.
+The email and the website share one brand language taken from requstudio.com and modern developer-tool sites: warm paper background, ink header bar, Manrope headlines, mono numbered labels, and small corner radii (8px blocks, 6px cards, 3 to 4px tags). Each section sits on a solid block of its own bold colour (security gold, products purple, data teal, workforce burnt orange, policy navy, impacts green, off the beaten path raspberry) with white story cards on top, so readers always know which section they are in. The email masthead is an image (`assets/img/masthead.png`) and the section icons are images in `assets/img/icons/`, so they look the same in every mail app. Section colours are in `_data/requisite_sections.yml` (email) and the `[data-topic]` rules in `assets/css/brief.css` (site); keep the two in step.
 
 ### Checks and safeguards
 

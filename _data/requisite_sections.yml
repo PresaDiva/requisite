@@ -1,77 +1,72 @@
 # Look of each ReQuisite section in the emailed edition.
 # "match" is a lowercase phrase found in the section heading the daily task writes.
-# A section whose heading matches nothing uses the first entry (neutral grey, key "other").
-# Colors come from the requstudio.com card pastels. band = light section header background,
-# bar = card edge and section rule, tint = tag fill, accent = text color for labels and links.
+# A section whose heading matches nothing uses the first entry (key "other").
+# Each section sits on a solid block of its own color (band), with white story cards on top.
+#   band  = section background, also used for the card tag
+#   ink   = text color on the band (white, or ink on the gold security band)
+#   sub   = secondary text on the band
+#   accent = link and label color inside the white cards
 - match: "__default__"
   key: other
   short: More
+  band: "#4A4350"
+  ink: "#FFFFFF"
+  sub: "#DDD5E0"
   accent: "#4A4350"
-  tint: "#E9E4EC"
-  rule: "#CFC5D3"
-  band: "#F2EEF3"
-  bar: "#4A4350"
   note: More from today
 - match: "ai products"
   key: products
   short: Products
-  accent: "#6E3580"
-  tint: "#EBD8F0"
-  rule: "#D6B8DF"
-  band: "#F7EFF9"
-  bar: "#914AA1"
+  band: "#7B3D8F"
+  ink: "#FFFFFF"
+  sub: "#EBD8F0"
+  accent: "#7B3D8F"
   note: New models, tools and launches
 - match: "data and"
   key: data
   short: Data
-  accent: "#1F5754"
-  tint: "#CDE5E1"
-  rule: "#A9D0CA"
-  band: "#ECF5F3"
-  bar: "#2B6663"
+  band: "#0F5F5A"
+  ink: "#FFFFFF"
+  sub: "#C9E4E0"
+  accent: "#0F5F5A"
   note: Warehouses, pipelines and the analytics stack
 - match: "workforce"
   key: workforce
   short: Workforce
-  accent: "#8A4B12"
-  tint: "#F5DCC0"
-  rule: "#E8BF93"
-  band: "#FBF1E6"
-  bar: "#B86A2A"
+  band: "#B8501F"
+  ink: "#FFFFFF"
+  sub: "#F8DCC8"
+  accent: "#A0441A"
   note: Jobs, skills and how work is changing
 - match: "policy"
   key: policy
   short: Policy
-  accent: "#2A4D7C"
-  tint: "#D9E5F3"
-  rule: "#B4CBE4"
-  band: "#EEF3FA"
-  bar: "#3A64A0"
+  band: "#1F427A"
+  ink: "#FFFFFF"
+  sub: "#CFDCF0"
+  accent: "#1F427A"
   note: Laws, regulators and deadlines
 - match: "environmental"
   key: environment
   short: Impacts
-  accent: "#38612A"
-  tint: "#DDEBD2"
-  rule: "#BDD6AC"
-  band: "#F0F6EB"
-  bar: "#4E7F3A"
+  band: "#2C6136"
+  ink: "#FFFFFF"
+  sub: "#CFE5D2"
+  accent: "#2C6136"
   note: Energy, land and communities
 - match: "off the beaten"
   key: offbeat
   short: Off the path
-  accent: "#A4431F"
-  tint: "#F9D9CD"
-  rule: "#EDB6A1"
-  band: "#FCF0EB"
-  bar: "#C2582D"
+  band: "#9C2F57"
+  ink: "#FFFFFF"
+  sub: "#F4D2DE"
+  accent: "#9C2F57"
   note: Credible research and reporting outside the headlines
 - match: "security"
   key: security
   short: Security
+  band: "#F2C14E"
+  ink: "#1E1A24"
+  sub: "#4A3A10"
   accent: "#1E1A24"
-  tint: "#F2C14E"
-  rule: "#D9A92F"
-  band: "#FDF5DE"
-  bar: "#F2C14E"
   note: Breaches, vulnerabilities, enforcement and deadlines to act on
