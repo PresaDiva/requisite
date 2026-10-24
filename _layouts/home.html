@@ -3,10 +3,26 @@ layout: default
 ---
 {%- assign newest = site.posts | first -%}
 <section class="hero">
-  <div class="wrap">
-    <p class="eyebrow">ReQuisite</p>
-    <h1 class="hero-title">{{ site.tagline }}</h1>
-    <p class="hero-sub">The daily read from ReQu Studio for people leading data and AI work: products, data and analytics, the workforce, policy, security, and AI's impact on people and the planet. Every item links to its source.</p>
+  <div class="wrap hero-grid">
+    <div class="hero-copy">
+      <p class="eyebrow">People / Data / AI</p>
+      <h1 class="hero-title">{{ site.tagline | replace: "five minutes", '<span class="hl">five minutes</span>' }}</h1>
+      <p class="hero-sub">The daily read from ReQu Studio for people leading data and AI work: products, data and analytics, the workforce, policy, security, and AI's impact on people and the planet. Every item links to its source.</p>
+      <div class="actions">
+        <a class="btn btn-primary" href="{{ "/latest/" | relative_url }}">Read today's ReQuisite</a>
+        <a class="btn btn-outline" href="#subscribe">Get it by email</a>
+      </div>
+    </div>
+    {%- if newest %}
+    <aside class="hero-tickets" aria-label="Today at a glance">
+      <a class="ticket ticket-a" href="{{ newest.url | relative_url }}">
+        <span class="ticket-top"><span>{{ newest.date | date: "%b %-d" | upcase }}</span><span>LATEST</span></span>
+        <span class="ticket-title">{{ newest.title | remove: "ReQuisite: " }}</span>
+        <span class="ticket-sub">Today's edition: five minutes, every item sourced.</span>
+        <span class="ticket-cta">Read it &rarr;</span>
+      </a>
+    </aside>
+    {%- endif %}
   </div>
 </section>
 

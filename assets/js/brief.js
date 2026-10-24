@@ -34,6 +34,9 @@
       icon: '<path d="M4 5h16v11H9l-5 4z"/><path d="M8 9.5h8M8 12.5h5"/>' }
   };
 
+  var SHORT = { security: 'Security', products: 'Products', data: 'Data', workforce: 'Workforce',
+    policy: 'Policy', environment: 'Impacts', offbeat: 'Off the path', talking: 'Talking point' };
+
   function kindOf(title) {
     var t = title.toLowerCase();
     if (t.indexOf('top 3') === 0) return 'top3';
@@ -117,6 +120,13 @@
         card.className = 'card';
         el.className = 'card-title';
         s.el.insertBefore(card, el);
+        if (s.kind !== 'top3' && s.kind !== 'talking') {
+          var top = document.createElement('div');
+          top.className = 'card-top';
+          top.innerHTML = '<span class="card-no" aria-hidden="true"></span><span class="card-tag"></span>';
+          top.lastChild.textContent = SHORT[s.kind] || 'More';
+          card.appendChild(top);
+        }
         card.appendChild(el);
         count++;
       } else if (card) {
@@ -153,6 +163,16 @@
       badge.textContent = count + (count === 1 ? ' item' : ' items');
       head.appendChild(badge);
     }
+  });
+
+  // Full-width page background per section: light sections alternate two tones,
+  // security and the talking point sit on dark ink.
+  var tone = 0;
+  sections.forEach(function (s) {
+    if (s.kind === 'top3' || s.kind === 'checks') return;
+    if (s.kind === 'security' || s.kind === 'talking') { s.el.setAttribute('data-tone', 'dark'); return; }
+    s.el.setAttribute('data-tone', tone % 2 === 0 ? 'a' : 'b');
+    tone++;
   });
 
   // 3. Colour-coded jump links.

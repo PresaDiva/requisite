@@ -27,6 +27,10 @@ The layout reads the edition's existing Markdown format, so the daily task does 
 
 The daily task may add an optional "## Off the beaten path" section for credible research and reporting outside the mainstream news cycle. It has its own color, icon and description in the email (`_data/requisite_sections.yml`, `assets/img/icons/offbeat.png`) and on the site (`assets/js/brief.js`, `assets/css/brief.css`).
 
+### Look and feel
+
+The email and the website share one brand language taken from requstudio.com: warm paper background, ink header bar, Manrope headlines, mono numbered labels, white cards and small corner radii (6 to 8px). Sections are told apart by the full-width page background: light sections alternate lilac (#EEE7F1) and sand (#F3EDE3), and Security and the Talking point sit on dark ink. Each section's own colour, taken only from the requstudio.com palette, appears as a small accent: its icon tile, card tag and story number. The email masthead and section icons are images in `assets/img/` so they look the same in every mail app. Section accents are in `_data/requisite_sections.yml` (email) and the `[data-topic]` rules in `assets/css/brief.css` (site); the background alternation is in `_includes/email-edition.html` and `assets/js/brief.js`.
+
 ### Checks and safeguards
 
 - `.github/scripts/check_posts.py` validates every post (front matter, the allowed section headings, no raw HTML, no em dashes, no empty sections). Run it locally with `python3 .github/scripts/check_posts.py`.

@@ -1,59 +1,57 @@
 # Look of each ReQuisite section in the emailed edition.
 # "match" is a lowercase phrase found in the section heading the daily task writes.
-# A section whose heading matches nothing uses the first entry (neutral grey, key "other").
+# A section whose heading matches nothing uses the first entry (key "other").
+# Sections are told apart by the full-width page background, which alternates
+# between two light brand tones (security always sits on dark ink).
+# Each section's own colour is a small accent only: icon tile, tag and story number.
+# Accents come from the requstudio.com palette.
+#   accent = icon tile, tag and number colour
+#   on     = text colour on the accent (tag label)
 - match: "__default__"
   key: other
   short: More
-  accent: "#5E5866"
-  tint: "#F2EEF3"
-  rule: "#DDD5E0"
+  accent: "#4A4350"
+  on: "#FFFFFF"
   note: More from today
 - match: "ai products"
   key: products
   short: Products
   accent: "#914AA1"
-  tint: "#F5EEF7"
-  rule: "#E3D3E8"
+  on: "#FFFFFF"
   note: New models, tools and launches
 - match: "data and"
   key: data
   short: Data
-  accent: "#2F7F86"
-  tint: "#EAF4F4"
-  rule: "#CDE3E4"
+  accent: "#2B6663"
+  on: "#FFFFFF"
   note: Warehouses, pipelines and the analytics stack
 - match: "workforce"
   key: workforce
   short: Workforce
-  accent: "#3A5BA0"
-  tint: "#EEF2FA"
-  rule: "#D3DCEF"
+  accent: "#8A4B12"
+  on: "#FFFFFF"
   note: Jobs, skills and how work is changing
 - match: "policy"
   key: policy
   short: Policy
-  accent: "#8A5A12"
-  tint: "#FBF4E4"
-  rule: "#EEDDB8"
+  accent: "#3B3440"
+  on: "#FFFFFF"
   note: Laws, regulators and deadlines
 - match: "environmental"
   key: environment
   short: Impacts
-  accent: "#4A7C3A"
-  tint: "#EEF5EA"
-  rule: "#D4E4CC"
+  accent: "#2B6663"
+  on: "#FFFFFF"
   note: Energy, land and communities
 - match: "off the beaten"
   key: offbeat
   short: Off the path
-  accent: "#B4532A"
-  tint: "#FBEEE8"
-  rule: "#EFCFC0"
+  accent: "#6E3580"
+  on: "#FFFFFF"
   note: Credible research and reporting outside the headlines
 - match: "security"
   key: security
   short: Security
-  accent: "#8A6400"
-  tint: "#FDF4DA"
-  rule: "#F0DFA8"
+  accent: "#F2C14E"
+  on: "#1E1A24"
   note: Breaches, vulnerabilities, enforcement and deadlines to act on
