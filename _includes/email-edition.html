@@ -13,6 +13,8 @@
 {%- assign MONO = "'JetBrains Mono',Menlo,Consolas,'Courier New',monospace" -%}
 {%- assign themes = site.data.requisite_sections -%}
 {%- assign img_base = "/assets/img/" | absolute_url -%}
+{%- assign icon_base = "/assets/img/icons/" | absolute_url -%}
+{%- assign sec_no = 0 -%}
 {%- assign words = include.post.content | strip_html | number_of_words -%}
 {%- assign minutes = words | divided_by: 200 | plus: 1 -%}
 {%- assign secs = include.post.content | split: "<h2" -%}
@@ -36,7 +38,7 @@
     {%- assign linkmap = linkmap | append: u | append: "::" | append: t.key | append: "||" -%}
   {%- endfor -%}
   {%- assign sid = name | slugify | prepend: "s-" -%}
-  {%- capture cell -%}<a href="#{{ sid }}" style="color:#1E1A24;text-decoration:none;white-space:nowrap;">{{ t.short }}</a>{%- endcapture -%}
+  {%- capture cell -%}<a href="#{{ sid }}" style="color:#1E1A24;text-decoration:none;white-space:nowrap;"><span style="color:{{ t.bar }};font-size:13px;">&#9679;</span>&nbsp;{{ t.short }}</a>{%- endcapture -%}
   {%- if ticker != "" -%}{%- assign ticker = ticker | append: ' <span style="color:#CFC5D3;">/</span> ' -%}{%- endif -%}
   {%- assign ticker = ticker | append: cell -%}
 {%- endfor -%}
@@ -105,7 +107,7 @@
           <tr>
             <td valign="top" style="width:40px;padding:0 0 22px 0;font-family:{{ MONO }};font-weight:500;font-size:22px;line-height:28px;color:#F2C14E;">{{ forloop.index }}</td>
             <td valign="top" style="padding:0 0 22px 0;font-family:{{ BODY }};font-size:16px;line-height:25px;color:#FFFFFF;">
-              {%- for th in themes -%}{%- if th.key == tkey -%}<span style="display:inline-block;color:#BDB4C2;font-family:{{ MONO }};font-weight:500;font-size:11px;line-height:16px;letter-spacing:1.5px;text-transform:uppercase;padding-bottom:4px;">{{ th.short }}</span><br>{%- endif -%}{%- endfor -%}
+              {%- for th in themes -%}{%- if th.key == tkey -%}<span style="display:inline-block;color:#BDB4C2;font-family:{{ MONO }};font-weight:500;font-size:11px;line-height:16px;letter-spacing:1.5px;text-transform:uppercase;padding-bottom:4px;"><span style="color:{{ th.bar }};font-size:12px;">&#9679;</span>&nbsp;{{ th.short }}</span><br>{%- endif -%}{%- endfor -%}
               {{ text }}</td>
           </tr>
         {%- endfor %}
@@ -123,14 +125,20 @@
   {%- assign n = chunks | size | minus: 1 -%}
 
   {%- unless is_talk %}
-  <tr><td id="{{ name | slugify | prepend: 's-' }}" style="padding:40px 22px 14px 22px;">
-    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="border-top:2px solid {{ t.accent }};">
+  {%- assign sec_no = sec_no | plus: 1 -%}
+  <tr><td id="{{ name | slugify | prepend: 's-' }}" style="padding:48px 22px 14px 22px;">
+    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:{{ t.band }};border-top:3px solid {{ t.bar }};border-radius:0 0 12px 12px;">
       <tr>
-        <td align="left" style="padding:10px 0 0 0;font-family:{{ MONO }};font-weight:500;font-size:11px;line-height:16px;letter-spacing:1.5px;text-transform:uppercase;color:{{ t.accent }};">{{ t.short }}</td>
-        <td align="right" style="padding:10px 0 0 0;font-family:{{ MONO }};font-weight:500;font-size:11px;line-height:16px;letter-spacing:1.5px;text-transform:uppercase;color:#5E5866;">{{ n }} {% if n == 1 %}story{% else %}stories{% endif %}</td>
+        <td valign="top" style="width:48px;padding:18px 0 18px 18px;"><img src="{{ icon_base }}{{ t.key }}.png" width="48" height="48" alt="" style="display:block;border:0;width:48px;height:48px;"></td>
+        <td valign="top" style="padding:18px 18px 18px 16px;">
+          <table role="presentation" width="100%" cellpadding="0" cellspacing="0"><tr>
+            <td align="left" style="font-family:{{ MONO }};font-weight:500;font-size:11px;line-height:16px;letter-spacing:1.5px;text-transform:uppercase;color:{{ t.accent }};">Section {% if sec_no < 10 %}0{% endif %}{{ sec_no }} / {{ t.short }}</td>
+            <td align="right" style="font-family:{{ MONO }};font-weight:500;font-size:11px;line-height:16px;letter-spacing:1.5px;text-transform:uppercase;color:#5E5866;white-space:nowrap;">{{ n }} {% if n == 1 %}story{% else %}stories{% endif %}</td>
+          </tr></table>
+          <div style="font-family:{{ HEAD }};font-weight:800;font-size:24px;line-height:30px;letter-spacing:-0.5px;color:#1E1A24;padding-top:4px;">{{ name }}</div>
+          <div style="font-family:{{ BODY }};font-size:15px;line-height:22px;color:#4A4350;padding-top:2px;">{{ t.note }}</div>
+        </td>
       </tr>
-      <tr><td colspan="2" style="padding:6px 0 0 0;font-family:{{ HEAD }};font-weight:800;font-size:24px;line-height:30px;letter-spacing:-0.5px;color:#1E1A24;">{{ name }}</td></tr>
-      <tr><td colspan="2" style="padding:4px 0 0 0;font-family:{{ BODY }};font-size:15px;line-height:22px;color:#5E5866;">{{ t.note }}</td></tr>
     </table>
   </td></tr>
   {%- endunless -%}
@@ -173,6 +181,7 @@
       <tr>
         <td style="padding:26px 26px 26px 26px;">
           <table role="presentation" cellpadding="0" cellspacing="0"><tr>
+            <td valign="middle" style="padding:0 12px 0 0;"><img src="{{ icon_base }}talking.png" width="40" height="40" alt="" style="display:block;border:0;width:40px;height:40px;"></td>
             <td valign="middle" style="font-family:{{ MONO }};font-weight:500;font-size:12px;line-height:18px;letter-spacing:2px;text-transform:uppercase;color:#F2C14E;">{{ name }}</td>
           </tr></table>
           <div style="font-family:{{ HEAD }};font-weight:800;font-size:23px;line-height:30px;letter-spacing:-0.5px;color:#FFFFFF;padding-top:10px;">{{ headline }}</div>
@@ -189,8 +198,8 @@
       {%- capture lk %}<a target="_blank" rel="noopener noreferrer" style="color:{{ t.accent }};text-decoration:underline;" {% endcapture -%}
       {%- assign codestyle = '<code style="font-family:Menlo,Consolas,monospace;font-size:13px;background:#F2EEF3;color:#1E1A24;padding:1px 5px;border-radius:4px;">' -%}
   <tr><td style="padding:0 22px 14px 22px;">
-    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#FFFFFF;border:1px solid #E6E0E8;border-radius:12px;">
-      <tr><td style="padding:20px 22px 22px 22px;">
+    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#FFFFFF;border:1px solid #E6E0E8;border-left:4px solid {{ t.bar }};border-radius:12px;">
+      <tr><td style="padding:20px 22px 22px 20px;">
         <table role="presentation" width="100%" cellpadding="0" cellspacing="0"><tr>
           <td align="left" style="font-family:{{ MONO }};font-weight:500;font-size:12px;line-height:20px;letter-spacing:1.5px;color:#5E5866;">NO. {% if story_no < 10 %}0{% endif %}{{ story_no }}</td>
           <td align="right"><span style="display:inline-block;border:1px solid {{ t.rule }};background:{{ t.tint }};color:{{ t.accent }};font-family:{{ MONO }};font-weight:500;font-size:10px;line-height:14px;letter-spacing:1.5px;text-transform:uppercase;padding:3px 9px;border-radius:999px;">{{ t.short }}</span></td>

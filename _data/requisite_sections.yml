@@ -1,13 +1,16 @@
 # Look of each ReQuisite section in the emailed edition.
 # "match" is a lowercase phrase found in the section heading the daily task writes.
 # A section whose heading matches nothing uses the first entry (neutral grey, key "other").
-# Colors are the card pastels from requstudio.com: tint = card fill, accent = dark ink for links and labels.
+# Colors come from the requstudio.com card pastels. band = light section header background,
+# bar = card edge and section rule, tint = tag fill, accent = text color for labels and links.
 - match: "__default__"
   key: other
   short: More
   accent: "#4A4350"
   tint: "#E9E4EC"
   rule: "#CFC5D3"
+  band: "#F2EEF3"
+  bar: "#4A4350"
   note: More from today
 - match: "ai products"
   key: products
@@ -15,6 +18,8 @@
   accent: "#6E3580"
   tint: "#EBD8F0"
   rule: "#D6B8DF"
+  band: "#F7EFF9"
+  bar: "#914AA1"
   note: New models, tools and launches
 - match: "data and"
   key: data
@@ -22,6 +27,8 @@
   accent: "#1F5754"
   tint: "#CDE5E1"
   rule: "#A9D0CA"
+  band: "#ECF5F3"
+  bar: "#2B6663"
   note: Warehouses, pipelines and the analytics stack
 - match: "workforce"
   key: workforce
@@ -29,6 +36,8 @@
   accent: "#8A4B12"
   tint: "#F5DCC0"
   rule: "#E8BF93"
+  band: "#FBF1E6"
+  bar: "#B86A2A"
   note: Jobs, skills and how work is changing
 - match: "policy"
   key: policy
@@ -36,6 +45,8 @@
   accent: "#2A4D7C"
   tint: "#D9E5F3"
   rule: "#B4CBE4"
+  band: "#EEF3FA"
+  bar: "#3A64A0"
   note: Laws, regulators and deadlines
 - match: "environmental"
   key: environment
@@ -43,6 +54,8 @@
   accent: "#38612A"
   tint: "#DDEBD2"
   rule: "#BDD6AC"
+  band: "#F0F6EB"
+  bar: "#4E7F3A"
   note: Energy, land and communities
 - match: "off the beaten"
   key: offbeat
@@ -50,6 +63,8 @@
   accent: "#A4431F"
   tint: "#F9D9CD"
   rule: "#EDB6A1"
+  band: "#FCF0EB"
+  bar: "#C2582D"
   note: Credible research and reporting outside the headlines
 - match: "security"
   key: security
@@ -57,4 +72,6 @@
   accent: "#1E1A24"
   tint: "#F2C14E"
   rule: "#D9A92F"
+  band: "#FDF5DE"
+  bar: "#F2C14E"
   note: Breaches, vulnerabilities, enforcement and deadlines to act on
