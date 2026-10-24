@@ -1,59 +1,60 @@
 # Look of each ReQuisite section in the emailed edition.
 # "match" is a lowercase phrase found in the section heading the daily task writes.
 # A section whose heading matches nothing uses the first entry (neutral grey, key "other").
+# Colors are the card pastels from requstudio.com: tint = card fill, accent = dark ink for links and labels.
 - match: "__default__"
   key: other
   short: More
-  accent: "#5E5866"
-  tint: "#F2EEF3"
-  rule: "#DDD5E0"
+  accent: "#4A4350"
+  tint: "#E9E4EC"
+  rule: "#CFC5D3"
   note: More from today
 - match: "ai products"
   key: products
   short: Products
-  accent: "#914AA1"
-  tint: "#F5EEF7"
-  rule: "#E3D3E8"
+  accent: "#6E3580"
+  tint: "#EBD8F0"
+  rule: "#D6B8DF"
   note: New models, tools and launches
 - match: "data and"
   key: data
   short: Data
-  accent: "#2F7F86"
-  tint: "#EAF4F4"
-  rule: "#CDE3E4"
+  accent: "#1F5754"
+  tint: "#CDE5E1"
+  rule: "#A9D0CA"
   note: Warehouses, pipelines and the analytics stack
 - match: "workforce"
   key: workforce
   short: Workforce
-  accent: "#3A5BA0"
-  tint: "#EEF2FA"
-  rule: "#D3DCEF"
+  accent: "#8A4B12"
+  tint: "#F5DCC0"
+  rule: "#E8BF93"
   note: Jobs, skills and how work is changing
 - match: "policy"
   key: policy
   short: Policy
-  accent: "#8A5A12"
-  tint: "#FBF4E4"
-  rule: "#EEDDB8"
+  accent: "#2A4D7C"
+  tint: "#D9E5F3"
+  rule: "#B4CBE4"
   note: Laws, regulators and deadlines
 - match: "environmental"
   key: environment
   short: Impacts
-  accent: "#4A7C3A"
-  tint: "#EEF5EA"
-  rule: "#D4E4CC"
+  accent: "#38612A"
+  tint: "#DDEBD2"
+  rule: "#BDD6AC"
   note: Energy, land and communities
 - match: "off the beaten"
   key: offbeat
   short: Off the path
-  accent: "#B4532A"
-  tint: "#FBEEE8"
-  rule: "#EFCFC0"
+  accent: "#A4431F"
+  tint: "#F9D9CD"
+  rule: "#EDB6A1"
   note: Credible research and reporting outside the headlines
 - match: "security"
   key: security
   short: Security
-  accent: "#8A6400"
-  tint: "#FDF4DA"
-  rule: "#F0DFA8"
+  accent: "#1E1A24"
+  tint: "#F2C14E"
+  rule: "#D9A92F"
   note: Breaches, vulnerabilities, enforcement and deadlines to act on

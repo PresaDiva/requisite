@@ -11,7 +11,7 @@ sitemap: false
 <meta name="robots" content="noindex">
 <meta name="color-scheme" content="light">
 <title>Email preview: {{ site.posts.first.title }}</title>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Manrope:wght@600;700;800&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Manrope:wght@600;700;800&family=JetBrains+Mono:wght@500&display=swap">
 </head>
 <body style="margin:0;background:#FAF8F5;">
 {%- for post in site.posts limit:1 %}{% include email-edition.html post=post %}{% endfor %}

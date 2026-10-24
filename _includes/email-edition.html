@@ -4,19 +4,24 @@
   Reads the edition the daily task writes (## sections, **headline** paragraphs,
   "Why it matters:" and "Source:" lines) and lays it out with inline styles so it
   survives email clients. Section colors, icons and descriptors live in
-  _data/requisite_sections.yml. Icons live in assets/img/icons/.
+  _data/requisite_sections.yml. Icons and the masthead live in assets/img/.
+  Look: warm paper background, ink bar, purple ticker, pastel "ticket" cards with
+  mono labels, like the request cards on requstudio.com.
 {%- endcomment -%}
 {%- assign HEAD = "Manrope,Inter,'Helvetica Neue',Arial,sans-serif" -%}
 {%- assign BODY = "Inter,'Helvetica Neue',Arial,sans-serif" -%}
+{%- assign MONO = "'JetBrains Mono',Menlo,Consolas,'Courier New',monospace" -%}
 {%- assign themes = site.data.requisite_sections -%}
+{%- assign img_base = "/assets/img/" | absolute_url -%}
 {%- assign icon_base = "/assets/img/icons/" | absolute_url -%}
 {%- assign words = include.post.content | strip_html | number_of_words -%}
 {%- assign minutes = words | divided_by: 200 | plus: 1 -%}
 {%- assign secs = include.post.content | split: "<h2" -%}
 
-{%- comment -%} Pass 1: map each source link to its section, and count stories per section {%- endcomment -%}
+{%- comment -%} Pass 1: map each source link to its section, and build the ticker of sections {%- endcomment -%}
 {%- assign linkmap = "||" -%}
-{%- assign glance = "" -%}
+{%- assign ticker = "" -%}
+{%- assign story_no = 0 -%}
 {%- for sec in secs offset: 1 -%}
   {%- assign parts = sec | split: "</h2>" -%}
   {%- assign name = parts[0] | split: ">" | last | strip -%}
@@ -26,42 +31,49 @@
   {%- for th in themes -%}{%- if lname contains th.match -%}{%- assign t = th -%}{%- break -%}{%- endif -%}{%- endfor -%}
   {%- assign body = parts | slice: 1, 99 | join: "</h2>" -%}
   {%- include email-normalize.html -%}
-  {%- assign n = body | split: "<p><strong>" | size | minus: 1 -%}
   {%- assign hrefs = body | split: 'href="' -%}
   {%- for h in hrefs offset: 1 -%}
     {%- assign u = h | split: '"' | first -%}
     {%- assign linkmap = linkmap | append: u | append: "::" | append: t.key | append: "||" -%}
   {%- endfor -%}
   {%- assign sid = name | slugify | prepend: "s-" -%}
-  {%- capture cell -%}
-        <td align="center" valign="top" style="padding:0 3px;">
-          <a href="#{{ sid }}" style="text-decoration:none;display:block;background:{{ t.tint }};border-radius:10px;padding:12px 2px 10px 2px;">
-            <img src="{{ icon_base }}{{ t.key }}.png" width="28" height="28" alt="" style="display:block;margin:0 auto;border:0;width:28px;height:28px;">
-            <div style="font-family:{{ HEAD }};font-weight:700;font-size:12px;line-height:17px;color:{{ t.accent }};padding-top:6px;">{{ t.short }}</div>
-            <div style="font-family:{{ BODY }};font-size:12px;line-height:16px;color:#5E5866;">{{ n }} {% if n == 1 %}story{% else %}stories{% endif %}</div>
-          </a>
-        </td>
-  {%- endcapture -%}
-  {%- assign glance = glance | append: cell -%}
+  {%- capture cell -%}<a href="#{{ sid }}" style="color:#FFFFFF;text-decoration:none;white-space:nowrap;">{{ t.short }}</a>{%- endcapture -%}
+  {%- if ticker != "" -%}{%- assign ticker = ticker | append: ' <span style="color:#F2C14E;">&#10033;</span> ' -%}{%- endif -%}
+  {%- assign ticker = ticker | append: cell -%}
 {%- endfor -%}
 
 {%- assign pre_src = include.post.content | split: "<li>" | slice: 1, 1 | first | split: "</li>" | first | strip_html | strip | truncate: 140 -%}
-<div style="background:#FAF8F5;margin:0;padding:24px 8px 40px 8px;">
+<div style="background:#FAF8F5;margin:0;padding:20px 8px 40px 8px;">
 <div style="display:none;max-height:0;overflow:hidden;mso-hide:all;font-size:1px;line-height:1px;color:#FAF8F5;opacity:0;">{{ pre_src | escape }}</div>
 <!--[if mso]><table role="presentation" width="640" align="center" cellpadding="0" cellspacing="0"><tr><td><![endif]-->
-<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="width:100%;max-width:640px;margin:0 auto;background:#FFFFFF;border:1px solid #E6E0E8;border-radius:16px;">
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="width:100%;max-width:640px;margin:0 auto;background:#FAF8F5;">
 
-  <tr><td style="padding:24px 24px 18px 24px;border-bottom:3px solid #914AA1;">
-    <a target="_blank" rel="noopener noreferrer" href="{{ site.studio_url }}" style="font-family:{{ HEAD }};font-weight:700;font-size:20px;color:#1E1A24;text-decoration:none;">ReQu Studio</a><span style="color:#CFC5D3;font-size:20px;padding:0 10px;">|</span><a target="_blank" rel="noopener noreferrer" href="{{ "/" | absolute_url }}" style="font-family:{{ HEAD }};font-weight:600;font-size:16px;color:#914AA1;text-decoration:none;">ReQuisite</a>
+  <tr><td style="background:#1E1A24;border-radius:14px 14px 0 0;padding:14px 22px;">
+    <table role="presentation" width="100%" cellpadding="0" cellspacing="0"><tr>
+      <td align="left" style="font-family:{{ HEAD }};font-weight:700;font-size:15px;line-height:20px;color:#FFFFFF;"><a target="_blank" rel="noopener noreferrer" href="{{ site.studio_url }}" style="color:#FFFFFF;text-decoration:none;">ReQu Studio</a></td>
+      <td align="right" style="font-family:{{ MONO }};font-size:12px;line-height:20px;letter-spacing:1px;text-transform:uppercase;"><a target="_blank" rel="noopener noreferrer" href="{{ include.post.url | absolute_url }}" style="color:#F2C14E;text-decoration:none;">Read on the web &rarr;</a></td>
+    </tr></table>
   </td></tr>
 
-  <tr><td style="padding:28px 24px 20px 24px;">
-    <div style="font-family:{{ HEAD }};font-weight:800;font-size:34px;line-height:40px;color:#1E1A24;letter-spacing:-0.5px;">{{ include.post.date | date: "%A, %B %-d" }}</div>
-    <div style="font-family:{{ BODY }};font-size:15px;line-height:22px;color:#5E5866;padding-top:6px;">{{ minutes }} min read. Every item links to its source.</div>
+  <tr><td align="center" style="padding:26px 0 4px 0;">
+    <a target="_blank" rel="noopener noreferrer" href="{{ "/" | absolute_url }}"><img src="{{ img_base }}masthead.png" width="560" alt="ReQuisite: data, AI and the people who use them" style="display:block;border:0;width:100%;max-width:560px;height:auto;"></a>
   </td></tr>
 
-  <tr><td style="padding:0 21px 22px 21px;">
-    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="table-layout:fixed;"><tr>{{ glance }}
+  <tr><td style="padding:6px 22px 0 22px;">
+    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="border-top:2px dashed #CFC5D3;border-bottom:2px dashed #CFC5D3;"><tr>
+      <td align="left" style="padding:11px 0;font-family:{{ MONO }};font-weight:500;font-size:12px;line-height:18px;letter-spacing:1.5px;text-transform:uppercase;color:#4A4350;">{{ include.post.date | date: "%A, %B %-d, %Y" }}</td>
+      <td align="right" style="padding:11px 0;font-family:{{ MONO }};font-weight:500;font-size:12px;line-height:18px;letter-spacing:1.5px;text-transform:uppercase;color:#6E3580;">{{ minutes }} min read</td>
+    </tr></table>
+  </td></tr>
+
+  <tr><td style="padding:30px 22px 6px 22px;">
+    <div style="font-family:{{ HEAD }};font-weight:800;font-size:34px;line-height:40px;letter-spacing:-1px;color:#1E1A24;">Good morning.</div>
+    <div style="font-family:{{ BODY }};font-size:18px;line-height:28px;color:#3B3440;padding-top:8px;">Here is what changed in data and AI, and what it means for the people doing the work. Every item links to its source.</div>
+  </td></tr>
+
+  <tr><td style="padding:22px 22px 8px 22px;">
+    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#914AA1;border-radius:10px;"><tr>
+      <td align="center" style="padding:11px 14px;font-family:{{ MONO }};font-weight:500;font-size:12px;line-height:22px;letter-spacing:1.5px;text-transform:uppercase;color:#FFFFFF;">{{ ticker }}</td>
     </tr></table>
   </td></tr>
 {%- for sec in secs offset: 1 -%}
@@ -72,10 +84,11 @@
   {%- include email-normalize.html -%}
 
   {%- if lname contains "top 3" -%}
-  <tr><td style="padding:0 24px 8px 24px;">
-    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#1E1A24;border-radius:14px;border-top:5px solid #F2C14E;">
-      <tr><td style="padding:22px 22px 6px 22px;">
-        <div style="font-family:{{ HEAD }};font-weight:700;font-size:20px;line-height:26px;color:#FAF8F5;padding-bottom:18px;">{{ name }}</div>
+  <tr><td style="padding:22px 22px 8px 22px;">
+    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#1E1A24;border-radius:14px;">
+      <tr><td style="padding:24px 24px 6px 24px;">
+        <div style="font-family:{{ MONO }};font-weight:500;font-size:12px;line-height:18px;letter-spacing:2px;text-transform:uppercase;color:#F2C14E;padding-bottom:6px;">{{ name }}</div>
+        <div style="font-family:{{ HEAD }};font-weight:800;font-size:26px;line-height:32px;letter-spacing:-0.5px;color:#FFFFFF;padding-bottom:20px;">Start <span style="color:#F2C14E;">here</span>.</div>
         <table role="presentation" width="100%" cellpadding="0" cellspacing="0">
         {%- assign items = body | split: "<li>" -%}
         {%- for it in items offset: 1 -%}
@@ -91,9 +104,9 @@
             {%- endif -%}
           {%- endfor -%}
           <tr>
-            <td valign="top" style="width:38px;padding:0 0 20px 0;font-family:{{ HEAD }};font-weight:800;font-size:30px;line-height:30px;color:#F2C14E;">{{ forloop.index }}</td>
-            <td valign="top" style="padding:0 0 20px 0;font-family:{{ BODY }};font-size:16px;line-height:24px;color:#FAF8F5;">
-              {%- for th in themes -%}{%- if th.key == tkey -%}<span style="display:inline-block;background:{{ th.accent }};color:#FFFFFF;font-family:{{ HEAD }};font-weight:700;font-size:12px;line-height:16px;padding:2px 8px;border-radius:999px;margin-bottom:6px;">{{ th.short }}</span><br>{%- endif -%}{%- endfor -%}
+            <td valign="top" style="width:40px;padding:0 0 22px 0;font-family:{{ MONO }};font-weight:500;font-size:22px;line-height:28px;color:#F2C14E;">{{ forloop.index }}</td>
+            <td valign="top" style="padding:0 0 22px 0;font-family:{{ BODY }};font-size:16px;line-height:25px;color:#FFFFFF;">
+              {%- for th in themes -%}{%- if th.key == tkey -%}<span style="display:inline-block;background:{{ th.tint }};color:#1E1A24;font-family:{{ MONO }};font-weight:500;font-size:11px;line-height:16px;letter-spacing:1px;text-transform:uppercase;padding:2px 9px;border-radius:999px;margin-bottom:7px;">{{ th.short }}</span><br>{%- endif -%}{%- endfor -%}
               {{ text }}</td>
           </tr>
         {%- endfor %}
@@ -111,18 +124,16 @@
   {%- assign n = chunks | size | minus: 1 -%}
 
   {%- unless is_talk %}
-  <tr><td id="{{ name | slugify | prepend: 's-' }}" style="padding:34px 24px 0 24px;">
-    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:{{ t.tint }};border-radius:14px 14px 0 0;border-top:4px solid {{ t.accent }};">
+  <tr><td id="{{ name | slugify | prepend: 's-' }}" style="padding:40px 22px 14px 22px;">
+    <table role="presentation" width="100%" cellpadding="0" cellspacing="0">
       <tr>
-        <td valign="middle" style="width:44px;padding:16px 0 14px 16px;"><img src="{{ icon_base }}{{ t.key }}.png" width="44" height="44" alt="" style="display:block;border:0;width:44px;height:44px;"></td>
-        <td valign="middle" style="padding:16px 10px 14px 14px;">
-          <div style="font-family:{{ HEAD }};font-weight:800;font-size:21px;line-height:26px;color:{{ t.accent }};">{{ name }}</div>
-          <div style="font-family:{{ BODY }};font-size:14px;line-height:20px;color:#5E5866;">{{ t.note }}</div>
-        </td>
-        <td valign="middle" align="right" style="padding:16px 16px 14px 0;white-space:nowrap;">
-          <span style="display:inline-block;background:#FFFFFF;border:1px solid {{ t.rule }};color:{{ t.accent }};font-family:{{ HEAD }};font-weight:700;font-size:12px;line-height:16px;padding:4px 10px;border-radius:999px;">{{ n }} {% if n == 1 %}story{% else %}stories{% endif %}</span>
+        <td valign="middle" style="width:50px;padding:0;"><img src="{{ icon_base }}{{ t.key }}.png" width="44" height="44" alt="" style="display:block;border:0;width:44px;height:44px;"></td>
+        <td valign="middle" style="padding:0 8px 0 0;">
+          <div style="font-family:{{ MONO }};font-weight:500;font-size:11px;line-height:16px;letter-spacing:1.5px;text-transform:uppercase;color:#6E3580;">{{ n }} {% if n == 1 %}story{% else %}stories{% endif %}</div>
+          <div style="font-family:{{ HEAD }};font-weight:800;font-size:26px;line-height:32px;letter-spacing:-0.6px;color:#1E1A24;"><span style="background:linear-gradient(transparent 62%,{{ t.tint }} 62%,{{ t.tint }} 94%,transparent 94%);">{{ name }}</span></div>
         </td>
       </tr>
+      <tr><td colspan="2" style="padding:8px 0 0 0;font-family:{{ BODY }};font-size:15px;line-height:22px;color:#4A4350;">{{ t.note }}</td></tr>
     </table>
   </td></tr>
   {%- endunless -%}
@@ -146,8 +157,11 @@
       {%- elsif txt contains ":" and labels contains lead_label -%}
         {%- assign flabel = txt | split: ":" | first -%}
         {%- assign fbody = txt | remove_first: flabel | remove_first: ":" | strip -%}
-        {%- if flabel == "Actions to take" -%}{%- assign fbg = "#1E1A24" -%}{%- assign fcol = "#F2C14E" -%}{%- else -%}{%- assign fbg = t.tint -%}{%- assign fcol = t.accent -%}{%- endif -%}
-        {%- capture fcell -%}<div style="padding-top:12px;"><span style="display:inline-block;background:{{ fbg }};color:{{ fcol }};font-family:{{ HEAD }};font-weight:800;font-size:12px;line-height:16px;padding:3px 10px;border-radius:999px;">{{ flabel }}</span><div style="font-family:{{ BODY }};font-size:15px;line-height:24px;color:#3F3B45;padding-top:6px;">{{ fbody }}</div></div>{%- endcapture -%}
+        {%- if flabel == "Actions to take" -%}
+          {%- capture fcell -%}<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin:14px 0 0 0;"><tr><td style="background:#1E1A24;border-radius:10px;padding:13px 16px 14px 16px;"><div style="font-family:{{ MONO }};font-weight:500;font-size:11px;line-height:16px;letter-spacing:1.5px;text-transform:uppercase;color:#F2C14E;padding-bottom:5px;">{{ flabel }}</div><div style="font-family:{{ BODY }};font-size:15px;line-height:24px;color:#FFFFFF;">{{ fbody | replace: "<a ", '<a style="color:#F2C14E;text-decoration:underline;" ' }}</div></td></tr></table>{%- endcapture -%}
+        {%- else -%}
+          {%- capture fcell -%}<div style="padding-top:12px;font-family:{{ BODY }};font-size:15px;line-height:24px;color:#3B3440;"><strong style="font-family:{{ HEAD }};font-weight:800;color:#1E1A24;">{{ flabel }}:</strong> {{ fbody }}</div>{%- endcapture -%}
+        {%- endif -%}
         {%- assign fields = fields | append: fcell -%}
       {%- else -%}
         {%- if summary != "" -%}{%- assign summary = summary | append: "<br><br>" -%}{%- endif -%}
@@ -157,63 +171,71 @@
 
     {%- if is_talk -%}
       {%- assign lk = '<a target="_blank" rel="noopener noreferrer" style="color:#F2C14E;text-decoration:underline;" ' -%}
-  <tr><td style="padding:40px 24px 0 24px;">
+  <tr><td style="padding:44px 22px 0 22px;">
     <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#1E1A24;border-radius:14px;">
       <tr>
-        <td valign="top" style="width:44px;padding:24px 0 0 20px;"><img src="{{ icon_base }}talking.png" width="44" height="44" alt="" style="display:block;border:0;width:44px;height:44px;"></td>
-        <td style="padding:22px 22px 22px 16px;">
-          <div style="font-family:{{ HEAD }};font-weight:700;font-size:13px;line-height:18px;color:#F2C14E;">{{ name }}</div>
-          <div style="font-family:{{ HEAD }};font-weight:800;font-size:21px;line-height:28px;color:#FAF8F5;padding-top:4px;">{{ headline }}</div>
-          <div style="font-family:{{ BODY }};font-size:15px;line-height:24px;color:#E4DEE7;padding-top:10px;">{{ summary | replace: "<a ", lk }}</div>
+        <td style="padding:26px 26px 26px 26px;">
+          <table role="presentation" cellpadding="0" cellspacing="0"><tr>
+            <td valign="middle" style="padding:0 12px 0 0;"><img src="{{ icon_base }}talking.png" width="36" height="36" alt="" style="display:block;border:0;width:36px;height:36px;"></td>
+            <td valign="middle" style="font-family:{{ MONO }};font-weight:500;font-size:12px;line-height:18px;letter-spacing:2px;text-transform:uppercase;color:#F2C14E;">{{ name }}</td>
+          </tr></table>
+          <div style="font-family:{{ HEAD }};font-weight:800;font-size:26px;line-height:33px;letter-spacing:-0.6px;color:#FFFFFF;padding-top:16px;">{{ headline }}</div>
+          <div style="font-family:{{ BODY }};font-size:16px;line-height:26px;color:#E4DEE7;padding-top:12px;">{{ summary | replace: "<a ", lk }}</div>
           {%- if source != "" %}
-          <div style="font-family:{{ BODY }};font-size:13px;line-height:19px;color:#BDB4C2;padding-top:14px;"><strong style="color:#F2C14E;">Source</strong>&nbsp; {{ source | replace: "<a ", lk }}</div>
+          <div style="border-top:2px dashed #4A4350;margin-top:18px;padding-top:14px;font-family:{{ BODY }};font-size:14px;line-height:21px;color:#D9D2DC;"><strong style="font-family:{{ MONO }};font-weight:500;font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:#F2C14E;">Source</strong>&nbsp; {{ source | replace: "<a ", lk }}</div>
           {%- endif %}
         </td>
       </tr>
     </table>
   </td></tr>
     {%- else -%}
+      {%- assign story_no = story_no | plus: 1 -%}
       {%- capture lk %}<a target="_blank" rel="noopener noreferrer" style="color:{{ t.accent }};text-decoration:underline;" {% endcapture -%}
-      {%- assign codestyle = '<code style="font-family:Menlo,Consolas,monospace;font-size:13px;background:#F2EEF3;color:#1E1A24;padding:1px 5px;border-radius:4px;">' -%}
-  <tr><td style="padding:0 24px;">
-    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:{{ t.tint }};">
-      <tr><td style="padding:0 12px 12px 12px;">
-        <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#FFFFFF;border:1px solid {{ t.rule }};border-left:4px solid {{ t.accent }};border-radius:10px;">
-          <tr><td style="padding:18px 18px 16px 16px;">
-            <div style="font-family:{{ HEAD }};font-weight:800;font-size:19px;line-height:25px;color:#1E1A24;">{{ headline }}</div>
-            <div style="font-family:{{ BODY }};font-size:15px;line-height:24px;color:#3F3B45;padding-top:8px;">{{ summary | replace: "<a ", lk | replace: "<code>", codestyle | replace: "<strong>", '<strong style="color:#1E1A24;">' }}</div>
-            {%- if fields != "" %}{{ fields | replace: "<a ", lk | replace: "<code>", codestyle }}{%- endif %}
-            {%- if why != "" %}
-            <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin:14px 0 0 0;">
-              <tr><td style="background:{{ t.tint }};border-radius:8px;padding:11px 14px 12px 14px;">
-                <div style="font-family:{{ HEAD }};font-weight:800;font-size:13px;line-height:18px;color:{{ t.accent }};padding-bottom:3px;">Why it matters</div>
-                <div style="font-family:{{ BODY }};font-size:15px;line-height:22px;color:#1E1A24;">{{ why | replace: "<a ", lk }}</div>
-              </td></tr>
-            </table>
-            {%- endif -%}
-            {%- if source != "" %}
-            <div style="font-family:{{ BODY }};font-size:14px;line-height:20px;color:#5E5866;padding-top:12px;"><strong style="color:{{ t.accent }};">Source</strong>&nbsp; {{ source | replace: "<a ", lk }}</div>
-            {%- endif %}
-          </td></tr>
-        </table>
+      {%- assign codestyle = '<code style="font-family:Menlo,Consolas,monospace;font-size:13px;background:rgba(255,255,255,0.65);color:#1E1A24;padding:1px 5px;border-radius:4px;">' -%}
+  <tr><td style="padding:0 22px 14px 22px;">
+    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:{{ t.tint }};border-radius:14px;">
+      <tr><td style="padding:20px 22px 22px 22px;">
+        <table role="presentation" width="100%" cellpadding="0" cellspacing="0"><tr>
+          <td align="left" style="font-family:{{ MONO }};font-weight:500;font-size:12px;line-height:20px;letter-spacing:1.5px;color:#3B3440;">NO. {% if story_no < 10 %}0{% endif %}{{ story_no }}</td>
+          <td align="right"><span style="display:inline-block;background:#1E1A24;color:#FFFFFF;font-family:{{ MONO }};font-weight:500;font-size:11px;line-height:16px;letter-spacing:1.5px;text-transform:uppercase;padding:3px 10px;border-radius:999px;">{{ t.short }}</span></td>
+        </tr></table>
+        <div style="font-family:{{ HEAD }};font-weight:800;font-size:22px;line-height:29px;letter-spacing:-0.4px;color:#1E1A24;padding-top:10px;">{{ headline }}</div>
+        <div style="font-family:{{ BODY }};font-size:16px;line-height:26px;color:#3B3440;padding-top:10px;">{{ summary | replace: "<a ", lk | replace: "<code>", codestyle | replace: "<strong>", '<strong style="color:#1E1A24;">' }}</div>
+        {%- if fields != "" %}{{ fields | replace: "<a ", lk | replace: "<code>", codestyle }}{%- endif %}
+        {%- if why != "" %}
+        <div style="border-top:2px dashed {{ t.rule }};margin-top:16px;padding-top:14px;font-family:{{ BODY }};font-size:16px;line-height:25px;color:#1E1A24;"><strong style="font-family:{{ HEAD }};font-weight:800;">Why it matters:</strong> {{ why | replace: "<a ", lk }}</div>
+        {%- endif -%}
+        {%- if source != "" %}
+        <div style="font-family:{{ BODY }};font-size:14px;line-height:21px;color:#4A4350;padding-top:12px;"><strong style="font-family:{{ MONO }};font-weight:500;font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:#1E1A24;">Source</strong>&nbsp; {{ source | replace: "<a ", lk }}</div>
+        {%- endif %}
       </td></tr>
     </table>
   </td></tr>
     {%- endif -%}
   {%- endfor -%}
-
-  {%- unless is_talk %}
-  <tr><td style="padding:0 24px;"><div style="height:14px;background:{{ t.tint }};border-radius:0 0 14px 14px;font-size:0;line-height:0;">&nbsp;</div></td></tr>
-  {%- endunless -%}
   {%- endif -%}
 {%- endfor %}
 
-  <tr><td style="padding:36px 24px 28px 24px;">
-    <div style="border-top:1px solid #E6E0E8;padding-top:20px;font-family:{{ BODY }};font-size:14px;line-height:22px;color:#5E5866;">
-      <strong style="font-family:{{ HEAD }};color:#1E1A24;">ReQu Studio</strong><br>
-      People, data and AI, working together. Curated by Chelsea Wilson at <a target="_blank" rel="noopener noreferrer" href="{{ site.studio_url }}" style="color:#914AA1;">ReQu Studio</a>. Every item links to its original source, and summaries state only what the source says.<br><br>
-      <a target="_blank" rel="noopener noreferrer" href="{{ include.post.url | absolute_url }}" style="color:#914AA1;">Read on the web</a>&nbsp;&nbsp;<span style="color:#CFC5D3;">|</span>&nbsp;&nbsp;<a target="_blank" rel="noopener noreferrer" href="{{ "/" | absolute_url }}" style="color:#914AA1;">All ReQuisites</a>
-    </div>
+  <tr><td style="padding:40px 22px 0 22px;">
+    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#F2C14E;border-radius:14px;"><tr>
+      <td style="padding:22px 24px;">
+        <div style="font-family:{{ HEAD }};font-weight:800;font-size:22px;line-height:29px;letter-spacing:-0.4px;color:#1E1A24;">Know someone who keeps nodding along in meetings?</div>
+        <div style="font-family:{{ BODY }};font-size:15px;line-height:23px;color:#1E1A24;padding-top:6px;">Forward this to them. Plain-English news on data and AI, in five minutes.</div>
+      </td>
+    </tr></table>
+  </td></tr>
+
+  <tr><td style="padding:22px 22px 0 22px;">
+    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#1E1A24;border-radius:14px;"><tr>
+      <td style="padding:26px 26px 28px 26px;font-family:{{ BODY }};font-size:14px;line-height:22px;color:#D9D2DC;">
+        <div style="font-family:{{ HEAD }};font-weight:800;font-size:20px;line-height:26px;color:#FFFFFF;">Every request has a person behind it.</div>
+        <div style="padding-top:8px;">Curated by Chelsea Wilson at <a target="_blank" rel="noopener noreferrer" href="{{ site.studio_url }}" style="color:#F2C14E;">ReQu Studio</a>. Every item links to its original source, and summaries state only what the source says.</div>
+        <table role="presentation" cellpadding="0" cellspacing="0" style="margin-top:18px;"><tr>
+          <td style="background:#914AA1;border-radius:10px;"><a target="_blank" rel="noopener noreferrer" href="{{ include.post.url | absolute_url }}" style="display:inline-block;padding:12px 22px;font-family:{{ BODY }};font-weight:600;font-size:15px;line-height:20px;color:#FFFFFF;text-decoration:none;">Read on the web</a></td>
+          <td style="padding-left:14px;"><a target="_blank" rel="noopener noreferrer" href="{{ "/" | absolute_url }}" style="font-family:{{ MONO }};font-size:12px;letter-spacing:1px;text-transform:uppercase;color:#F2C14E;text-decoration:none;">All ReQuisites &rarr;</a></td>
+        </tr></table>
+      </td>
+    </tr></table>
   </td></tr>
 
 </table>

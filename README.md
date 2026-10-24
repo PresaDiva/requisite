@@ -27,6 +27,10 @@ The layout reads the edition's existing Markdown format, so the daily task does 
 
 The daily task may add an optional "## Off the beaten path" section for credible research and reporting outside the mainstream news cycle. It has its own color, icon and description in the email (`_data/requisite_sections.yml`, `assets/img/icons/offbeat.png`) and on the site (`assets/js/brief.js`, `assets/css/brief.css`).
 
+### Look and feel
+
+The email and the website share one brand language taken from requstudio.com: warm paper background, ink header bar, purple ticker, pastel "ticket" cards with a mono number and pill tag (one pastel per section), dashed dividers, Caveat handwritten notes and a gold highlighter. The masthead in the email is an image (`assets/img/masthead.png`) so it looks the same in every mail app. Section colors are in `_data/requisite_sections.yml` (email) and the `[data-topic]` rules at the top of `assets/css/brief.css` (site); keep the two in step.
+
 ### Checks and safeguards
 
 - `.github/scripts/check_posts.py` validates every post (front matter, the allowed section headings, no raw HTML, no em dashes, no empty sections). Run it locally with `python3 .github/scripts/check_posts.py`.
