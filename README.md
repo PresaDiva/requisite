@@ -9,7 +9,7 @@ URLs once GitHub Pages is on:
 - RSS, all ReQuisites: https://presadiva.github.io/requisite/feed.xml
 - RSS, newest ReQuisite only: https://presadiva.github.io/requisite/latest.xml
 
-`hostinger-embed.html` is the card for the ReQuired Reading page (paste into a Hostinger "Embed code" element). It is not part of the site build.
+`hostinger-embed.html` is the card for the ReQuired Reading page (paste into a Hostinger "Embed code" element). It is not part of the site build. It reads the newest edition's title, link and Top 3 from https://presadiva.github.io/requisite/latest.json, which the site builds from the newest post.
 
 ## Email newsletter
 

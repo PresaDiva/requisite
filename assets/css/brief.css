@@ -353,10 +353,10 @@ h1, h2, h3 { letter-spacing: -0.02em; }
 .hero-tickets { display: grid; }
 .ticket {
   display: grid; gap: 10px; padding: 24px 26px; border-radius: 8px; text-decoration: none;
-  background: var(--surface); color: var(--ink); border: 1px solid var(--line); border-top: 3px solid var(--gold);
+  background: var(--surface); color: var(--ink); border: 1px solid var(--line); border-top: 3px solid var(--ink);
   box-shadow: 0 12px 28px -20px rgba(30, 26, 36, .45); transition: border-color .15s ease, transform .15s ease;
 }
-.ticket:hover { color: var(--ink); border-color: var(--line-strong); border-top-color: var(--gold); transform: translateY(-2px); }
+.ticket:hover { color: var(--ink); border-color: var(--line-strong); border-top-color: var(--ink); transform: translateY(-2px); }
 .ticket-top { display: flex; justify-content: space-between; font-family: var(--mono); font-weight: 500; font-size: 11px; letter-spacing: .14em; color: var(--muted); }
 .ticket-title { font-family: var(--head); font-weight: 800; font-size: clamp(22px, 2.4vw, 28px); line-height: 1.15; letter-spacing: -0.02em; }
 .ticket-sub { font-size: 15px; color: var(--muted); }
@@ -467,3 +467,12 @@ p.field.act .label::after { content: ""; }
   .sec-talking { padding: 22px 20px 8px; }
   .latest { margin-top: 32px; }
 }
+
+/* Home page latest card: Top 3 on the muted tone with a bold ink top line, like the edition */
+.latest-top3 { background: #F1EEF2; color: var(--ink); border-top: 3px solid var(--ink); border-radius: 0 0 6px 6px; }
+.latest-top3 h2 { color: var(--purple-dark); }
+.latest-top3 li { color: var(--ink); }
+.latest-top3 li::marker { color: var(--purple); }
+.latest-top3 a { color: var(--purple-dark); }
+.latest-top3 a:hover { color: var(--ink); }
+

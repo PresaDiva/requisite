@@ -1,50 +1,53 @@
 <!-- ReQuisite: latest-ReQuisite card for requstudio.com (Hostinger "Embed code" element).
-     Shows the newest ReQuisite from the latest-only RSS feed, plus two buttons.
-     If the feed can't load, the buttons still work. -->
+     Shows the newest ReQuisite and its Top 3 from latest.json, plus buttons and an email sign-up.
+     Styled like the ReQuisite site: white card, bold ink top line, mono labels, small corners.
+     If the data can't load, the card still shows its title and the buttons still work. -->
 <div class="rq-brief" id="rq-brief">
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Manrope:wght@500;600;700&display=swap">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Manrope:wght@600;700;800&family=JetBrains+Mono:wght@500&display=swap">
   <style>
-    .rq-brief { --purple:#914AA1; --purple-dark:#6E3580; --ink:#1E1A24; --text:#1D1E20; --muted:#5E5866; --line:#E6E0E8; --line-strong:#CFC5D3; --gold:#F2C14E; --on-dark:#FAF8F5; --on-dark-muted:#D9D2DC;
-      font-family: Inter, "Helvetica Neue", sans-serif; color: var(--text); background: #FFFFFF; border: 1px solid var(--line); border-radius: 12px; padding: 32px; max-width: 1136px; margin: 0 auto; box-sizing: border-box; }
+    .rq-brief { --purple:#914AA1; --purple-dark:#6E3580; --ink:#1E1A24; --text:#1D1E20; --muted:#5E5866; --line:#E6E0E8; --line-strong:#CFC5D3; --gold:#F2C14E; --tone:#F1EEF2;
+      --mono:"JetBrains Mono", Menlo, Consolas, monospace; --head:Manrope, Inter, sans-serif;
+      font-family: Inter, "Helvetica Neue", sans-serif; color: var(--text); background: #FFFFFF; border: 1px solid var(--line); border-top: 3px solid var(--ink); border-radius: 6px; padding: 32px; max-width: 1136px; margin: 0 auto; box-sizing: border-box; }
     .rq-brief * { box-sizing: border-box; }
     .rq-brief [hidden] { display: none !important; }
-    .rq-brief .rq-eyebrow { margin: 0; font-size: 13px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: var(--purple); }
-    .rq-brief .rq-meta { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; margin-top: 14px; font-size: 14px; color: var(--muted); }
-    .rq-brief .rq-pill { display: inline-block; padding: 3px 10px; border-radius: 999px; background: var(--gold); color: var(--ink); font-size: 12px; font-weight: 600; letter-spacing: .04em; text-transform: uppercase; }
-    .rq-brief h3 { margin: 10px 0 0; font-family: Manrope, Inter, sans-serif; font-weight: 600; font-size: 28px; line-height: 1.25; color: var(--text); }
+    .rq-brief .rq-meta { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px; margin: 0; font-family: var(--mono); font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); }
+    .rq-brief .rq-eyebrow { color: var(--purple-dark); }
+    .rq-brief h3 { margin: 12px 0 0; font-family: var(--head); font-weight: 800; font-size: 30px; line-height: 1.15; letter-spacing: -0.03em; color: var(--ink); }
     .rq-brief h3 a { color: inherit; text-decoration: none; }
     .rq-brief h3 a:hover { color: var(--purple); }
-    .rq-brief .rq-top3 { margin-top: 20px; background: var(--ink); color: var(--on-dark); border-radius: 12px; padding: 22px 26px; }
-    .rq-brief .rq-top3-label { margin: 0 0 6px; font-size: 13px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: var(--gold); }
-    .rq-brief .rq-top3 ul { margin: 0; padding-left: 20px; }
-    .rq-brief .rq-top3 li { margin: 10px 0; font-size: 16px; line-height: 1.55; }
-    .rq-brief .rq-top3 a { color: var(--on-dark-muted); }
-    .rq-brief .rq-top3 a:hover { color: #FFFFFF; }
+    .rq-brief .rq-top3 { margin-top: 22px; background: var(--tone); border-top: 3px solid var(--ink); border-radius: 0 0 6px 6px; padding: 18px 22px 6px; }
+    .rq-brief .rq-top3-label { margin: 0 0 4px; font-family: var(--mono); font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: var(--purple-dark); }
+    .rq-brief .rq-top3 ol { list-style: none; margin: 0; padding: 0; counter-reset: rq; }
+    .rq-brief .rq-top3 li { counter-increment: rq; display: grid; grid-template-columns: 36px 1fr; padding: 14px 0; font-size: 16px; line-height: 1.55; color: var(--ink); }
+    .rq-brief .rq-top3 li + li { border-top: 1px solid #DDD5E0; }
+    .rq-brief .rq-top3 li::before { content: "0" counter(rq); font-family: var(--mono); font-size: 18px; line-height: 1.4; color: var(--purple); }
+    .rq-brief .rq-top3 a { color: var(--purple-dark); }
+    .rq-brief .rq-top3 a:hover { color: var(--ink); }
     .rq-brief .rq-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 24px; }
-    .rq-brief .rq-btn { display: inline-flex; align-items: center; justify-content: center; min-height: 48px; padding: 0 24px; border-radius: 8px; font-weight: 500; font-size: 15px; text-decoration: none; }
+    .rq-brief .rq-btn { display: inline-flex; align-items: center; justify-content: center; min-height: 48px; padding: 0 24px; border-radius: 6px; font-weight: 600; font-size: 15px; text-decoration: none; }
     .rq-brief .rq-btn-primary { background: var(--purple); color: #FFFFFF; }
     .rq-brief .rq-btn-primary:hover { background: var(--purple-dark); color: #FFFFFF; }
-    .rq-brief .rq-btn-ghost { background: #FFFFFF; color: var(--ink); border: 1px solid var(--line-strong); }
-    .rq-brief .rq-btn-ghost:hover { border-color: var(--purple); color: var(--purple); }
-    .rq-brief .rq-sub { margin-top: 24px; padding-top: 24px; border-top: 1px solid var(--line); }
-    .rq-brief .rq-sub-title { margin: 0; font-family: Manrope, Inter, sans-serif; font-weight: 600; font-size: 18px; color: var(--text); }
+    .rq-brief .rq-btn-ghost { background: transparent; color: var(--ink); border: 1px solid var(--ink); }
+    .rq-brief .rq-btn-ghost:hover { background: var(--ink); color: #FFFFFF; }
+    .rq-brief .rq-sub { margin-top: 28px; padding-top: 24px; border-top: 3px solid var(--ink); }
+    .rq-brief .rq-sub-title { margin: 0; font-family: var(--head); font-weight: 800; font-size: 20px; letter-spacing: -0.02em; color: var(--ink); }
     .rq-brief .rq-sub-text { margin: 4px 0 0; font-size: 14px; color: var(--muted); }
     .rq-brief .rq-sub form { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 14px; max-width: 520px; }
-    .rq-brief .rq-sub input[type="email"] { flex: 1 1 240px; min-height: 48px; padding: 0 16px; font-family: Inter, sans-serif; font-size: 16px; border: 1px solid var(--line-strong); border-radius: 8px; background: #FFFFFF; color: var(--text); }
-    .rq-brief .rq-sub button { min-height: 48px; padding: 0 24px; font-family: Inter, sans-serif; font-weight: 500; font-size: 15px; background: var(--ink); color: #FFFFFF; border: 0; border-radius: 8px; cursor: pointer; }
+    .rq-brief .rq-sub input[type="email"] { flex: 1 1 240px; min-height: 48px; padding: 0 16px; font-family: Inter, sans-serif; font-size: 16px; border: 1px solid var(--line-strong); border-radius: 6px; background: #FFFFFF; color: var(--text); }
+    .rq-brief .rq-sub input[type="email"]:focus { outline: 3px solid var(--purple); outline-offset: 1px; }
+    .rq-brief .rq-sub button { min-height: 48px; padding: 0 24px; font-family: Inter, sans-serif; font-weight: 600; font-size: 15px; background: var(--ink); color: #FFFFFF; border: 0; border-radius: 6px; cursor: pointer; }
     .rq-brief .rq-sub button:hover { background: var(--purple); }
     .rq-brief .rq-hide { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
-    .rq-brief .rq-rss { margin: 16px 0 0; font-size: 13px; color: var(--muted); }
-    .rq-brief .rq-rss a { color: var(--purple); }
-    @media (max-width: 640px) { .rq-brief { padding: 20px; } .rq-brief h3 { font-size: 23px; } .rq-brief .rq-top3 { padding: 18px; } .rq-brief .rq-btn { flex: 1 1 100%; } }
+    .rq-brief .rq-rss { margin: 16px 0 0; font-family: var(--mono); font-size: 11px; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+    .rq-brief .rq-rss a { color: var(--purple-dark); }
+    @media (max-width: 640px) { .rq-brief { padding: 20px; } .rq-brief h3 { font-size: 24px; } .rq-brief .rq-top3 { padding: 14px 16px 4px; } .rq-brief .rq-btn { flex: 1 1 100%; } }
   </style>
 
-  <p class="rq-eyebrow">ReQuisite</p>
-  <div class="rq-meta"><span class="rq-pill">Latest</span><span>New every morning</span></div>
+  <p class="rq-meta"><span class="rq-eyebrow">ReQuisite / Daily read</span><span id="rq-date">New every morning</span></p>
   <h3><a id="rq-title" href="https://presadiva.github.io/requisite/latest/">Data, AI and the people who use them: what changed today, in five minutes.</a></h3>
   <div class="rq-top3" id="rq-top3" hidden>
     <p class="rq-top3-label">Top 3 today</p>
-    <ul id="rq-list"></ul>
+    <ol id="rq-list"></ol>
   </div>
   <div class="rq-actions">
     <a class="rq-btn rq-btn-primary" id="rq-read" href="https://presadiva.github.io/requisite/latest/">Read today's ReQuisite</a>
@@ -62,40 +65,38 @@
       <button type="submit">Subscribe</button>
     </form>
   </div>
-  <p class="rq-rss">Prefer a feed reader? <a href="https://presadiva.github.io/requisite/latest.xml">RSS: latest ReQuisite</a> &middot; <a href="https://presadiva.github.io/requisite/feed.xml">RSS: all ReQuisites</a></p>
+  <p class="rq-rss">Feed reader? <a href="https://presadiva.github.io/requisite/latest.xml">RSS: latest</a> &middot; <a href="https://presadiva.github.io/requisite/feed.xml">RSS: all</a></p>
 
   <script>
   (function () {
-    var FEED = 'https://presadiva.github.io/requisite/latest.xml';
-    fetch(FEED, { cache: 'no-cache' })
-      .then(function (r) { if (!r.ok) throw new Error(r.status); return r.text(); })
-      .then(function (xml) {
-        var doc = new DOMParser().parseFromString(xml, 'application/xml');
-        var item = doc.querySelector('item');
-        if (!item) return;
-        var title = (item.querySelector('title') || {}).textContent || '';
-        var link = (item.querySelector('link') || {}).textContent || '';
-        var html = (item.querySelector('description') || {}).textContent || '';
+    var DATA = 'https://presadiva.github.io/requisite/latest.json';
+    fetch(DATA, { cache: 'no-cache' })
+      .then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); })
+      .then(function (d) {
+        if (!d || !d.title) return;
         var t = document.getElementById('rq-title');
-        t.textContent = title.replace('ReQuisite: ', '');
-        if (link) { t.href = link; document.getElementById('rq-read').href = link; }
-        var body = new DOMParser().parseFromString(html, 'text/html');
-        var firstList = body.querySelector('ul');
-        if (firstList) {
-          var list = document.getElementById('rq-list');
-          Array.prototype.slice.call(firstList.children, 0, 3).forEach(function (li) {
-            var out = document.createElement('li');
-            li.childNodes.forEach(function (n) {
-              if (n.nodeType === 3) out.appendChild(document.createTextNode(n.textContent));
-              else if (n.tagName === 'A' && /^https?:/.test(n.getAttribute('href') || '')) {
-                var a = document.createElement('a'); a.href = n.getAttribute('href'); a.textContent = n.textContent;
-                a.target = '_blank'; a.rel = 'noopener'; out.appendChild(a);
-              } else out.appendChild(document.createTextNode(n.textContent));
-            });
-            list.appendChild(out);
-          });
-          document.getElementById('rq-top3').hidden = false;
+        t.textContent = d.title;
+        if (d.url) { t.href = d.url; document.getElementById('rq-read').href = d.url; }
+        if (d.date) {
+          var dt = new Date(d.date);
+          if (!isNaN(dt)) document.getElementById('rq-date').textContent = dt.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
         }
+        var list = document.getElementById('rq-list');
+        (d.top3 || []).slice(0, 3).forEach(function (html) {
+          // Keep only text and plain web links from each item.
+          var src = new DOMParser().parseFromString('<div>' + html + '</div>', 'text/html').body.firstChild;
+          var out = document.createElement('li');
+          var span = document.createElement('span');
+          src.childNodes.forEach(function (n) {
+            if (n.tagName === 'A' && /^https?:/.test(n.getAttribute('href') || '')) {
+              var a = document.createElement('a'); a.href = n.getAttribute('href'); a.textContent = n.textContent;
+              a.target = '_blank'; a.rel = 'noopener'; span.appendChild(a);
+            } else span.appendChild(document.createTextNode(n.textContent));
+          });
+          out.appendChild(span);
+          list.appendChild(out);
+        });
+        if (list.children.length) document.getElementById('rq-top3').hidden = false;
       })
       .catch(function () { /* keep the static card and buttons */ });
   })();

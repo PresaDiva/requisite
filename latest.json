@@ -1,0 +1,13 @@
+---
+layout: null
+permalink: /latest.json
+sitemap: false
+---
+{%- assign p = site.posts.first -%}
+{%- assign top = p.content | split: "<h2" | slice: 1, 1 | first | split: "</ul>" | first | split: "<li>" -%}
+{
+  "title": {{ p.title | remove: "ReQuisite: " | jsonify }},
+  "url": {{ p.url | absolute_url | jsonify }},
+  "date": {{ p.date | date_to_xmlschema | jsonify }},
+  "top3": [{% for li in top offset: 1 limit: 3 %}{{ li | split: "</li>" | first | strip | jsonify }}{% unless forloop.last %}, {% endunless %}{% endfor %}]
+}
