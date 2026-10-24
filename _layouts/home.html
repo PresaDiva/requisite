@@ -15,18 +15,16 @@ layout: default
     </div>
     {%- if newest %}
     <aside class="hero-tickets" aria-label="Today at a glance">
-      <p class="hand hand-top" aria-hidden="true">start here</p>
       <a class="ticket ticket-a" href="{{ newest.url | relative_url }}">
         <span class="ticket-top"><span>{{ newest.date | date: "%b %-d" | upcase }}</span><span>LATEST</span></span>
         <span class="ticket-title">{{ newest.title | remove: "ReQuisite: " }}</span>
-        <span class="ticket-sub">Five minutes, every item sourced</span>
+        <span class="ticket-sub">Today's edition: five minutes, every item sourced.</span>
+        <span class="ticket-cta">Read it &rarr;</span>
       </a>
-      <p class="hand hand-bottom" aria-hidden="true">what changed, and who it affects</p>
     </aside>
     {%- endif %}
   </div>
 </section>
-<div class="ticker" aria-hidden="true"><div class="ticker-track"><span>data</span><i>&#10033;</i><span>AI</span><i>&#10033;</i><span>people</span><i>&#10033;</i><span>every item sourced</span><i>&#10033;</i><span>five minutes</span><i>&#10033;</i><span>data</span><i>&#10033;</i><span>AI</span><i>&#10033;</i><span>people</span><i>&#10033;</i><span>every item sourced</span><i>&#10033;</i><span>five minutes</span><i>&#10033;</i><span>data</span><i>&#10033;</i><span>AI</span><i>&#10033;</i><span>people</span><i>&#10033;</i><span>every item sourced</span><i>&#10033;</i><span>five minutes</span><i>&#10033;</i></div></div>
 
 <section class="wrap latest" aria-labelledby="latest-heading">
   {%- if newest %}
