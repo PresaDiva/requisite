@@ -9,9 +9,19 @@ sitemap: false
   <title>{{ site.title | xml_escape }}: latest</title>
   <link>{{ "/" | absolute_url }}</link>
   <atom:link href="{{ "/latest.xml" | absolute_url }}" rel="self" type="application/rss+xml"/>
-  <description>The most recent ReQuisite only. Full archive: {{ "/" | absolute_url }}</description>
+  <description>The most recent weekday ReQuisite only (this feed sends the newsletter). Full archive: {{ "/" | absolute_url }}</description>
   <language>en</language>
-  {%- for post in site.posts limit:1 %}
+  {%- comment -%}
+    Buttondown emails each new item in this feed, so the feed carries only the newest
+    weekday (Monday to Friday) edition. Weekend editions still appear on the website,
+    but Buttondown sees no new item on Saturday or Sunday and sends nothing.
+  {%- endcomment -%}
+  {%- assign weekday_posts = "" | split: "" -%}
+  {%- for p in site.posts -%}
+    {%- assign dow = p.date | date: "%u" | plus: 0 -%}
+    {%- if dow <= 5 -%}{%- assign weekday_posts = weekday_posts | push: p -%}{%- break -%}{%- endif -%}
+  {%- endfor -%}
+  {%- for post in weekday_posts limit:1 %}
   {%- capture branded %}{% include email-edition.html post=post %}{% endcapture %}
   <lastBuildDate>{{ post.date | date_to_rfc822 }}</lastBuildDate>
   <item>

@@ -16,6 +16,7 @@ URLs once GitHub Pages is on:
 The sign-up forms post to Buttondown (https://buttondown.com). To turn email delivery on:
 1. Create a Buttondown newsletter named ReQuisite. If the username is not `requisite`, change `newsletter.username` in `_config.yml` and the two URLs in `hostinger-embed.html`.
 2. Add Buttondown's RSS-to-email feature and point it at https://presadiva.github.io/requisite/latest.xml so each new edition is emailed automatically.
+   `latest.xml` only ever carries the newest weekday (Monday to Friday) edition, so the newsletter goes out on weekdays only. Weekend editions are still published on the website; Buttondown simply sees no new item on Saturday or Sunday. To email every day again, remove the weekday filter in `latest.xml`.
 3. In Buttondown, pick the plainest email template so its own header and footer don't double up with ReQuisite's. Buttondown still adds its unsubscribe footer.
 
 ### How the email is designed
