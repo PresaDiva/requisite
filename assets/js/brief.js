@@ -133,6 +133,7 @@
         card.appendChild(el);
       }
     });
+    s.count = count;
     var meta = TOPICS[s.kind];
     if (!meta) return;
     if (s.kind !== 'talking' && s.kind !== 'security') topicNo++;
@@ -184,6 +185,13 @@
       a.setAttribute('data-topic', s.kind);
       a.innerHTML = '<span class="chip-dot" aria-hidden="true"></span>';
       a.appendChild(document.createTextNode(s.title));
+      if (s.count && s.kind !== 'top3' && s.kind !== 'talking') {
+        var n = document.createElement('span');
+        n.className = 'chip-count';
+        n.textContent = s.count;
+        n.setAttribute('aria-label', s.count + (s.count === 1 ? ' item' : ' items'));
+        a.appendChild(n);
+      }
       toc.appendChild(a);
     });
     toc.parentNode.hidden = false;

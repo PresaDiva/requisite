@@ -164,6 +164,7 @@ code {
 [data-topic="top3"]        { --accent: #F2C14E; }
 
 .chip { gap: 8px; }
+.chip-count { font-family: 'JetBrains Mono', monospace; font-size: 12px; font-weight: 500; line-height: 1; padding: 3px 7px; border-radius: 3px; background: var(--ink); color: #fff; flex: none; }
 .chip-dot { width: 10px; height: 10px; border-radius: 50%; background: var(--accent, var(--purple)); flex: none; }
 .chip[data-topic]:hover { border-color: var(--accent); color: var(--accent-dark, var(--ink)); background: var(--tint, var(--surface)); }
 
