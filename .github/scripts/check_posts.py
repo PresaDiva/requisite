@@ -22,6 +22,7 @@ def err(path, msg):
     errors.append(f"{path}: {msg}")
 
 
+VISUALS = ["dots", "scale", "bar", "ring", "compare", "ranking", "countdown", "timeline", "none"]
 TOPICS = {"security", "products", "data", "workforce", "policy", "environment", "offbeat", "other"}
 
 
@@ -50,18 +51,56 @@ def check_infographic(path, front):
     if len(str(ig.get("number", ""))) > 8:
         err(path, "infographic 'number' should be short (8 characters or fewer), e.g. 200+ or $200B")
     visual = ig.get("visual", "none")
-    if visual not in ("dots", "bar", "none"):
-        err(path, "infographic 'visual' must be dots, bar or none")
-    if visual == "dots":
+    num = lambda x: isinstance(x, (int, float)) and not isinstance(x, bool)
+    whole = lambda x, lo, hi: isinstance(x, int) and not isinstance(x, bool) and lo <= x <= hi
+    if visual not in VISUALS:
+        err(path, f"infographic 'visual' must be one of {', '.join(VISUALS)}")
+    elif visual == "dots":
         total, marked = ig.get("dots_total"), ig.get("dots_marked", 0)
-        if not isinstance(total, int) or not 1 <= total <= 300:
+        if not whole(total, 1, 300):
             err(path, "infographic 'dots_total' must be a whole number from 1 to 300")
-        elif not isinstance(marked, int) or not 0 <= marked <= total:
+        elif not whole(marked, 0, total):
             err(path, "infographic 'dots_marked' must be a whole number from 0 to dots_total")
-    if visual == "bar":
+    elif visual == "scale":
+        total, marked = ig.get("units"), ig.get("units_marked", 0)
+        if not whole(total, 1, 300):
+            err(path, "infographic 'units' must be a whole number from 1 to 300")
+        elif not whole(marked, 0, total):
+            err(path, "infographic 'units_marked' must be a whole number from 0 to units")
+        if not str(ig.get("unit_label") or "").strip():
+            err(path, "infographic scale needs 'unit_label', e.g. \"Each square = $1 billion\"")
+    elif visual == "bar":
         val, mx = ig.get("bar_value"), ig.get("bar_max")
-        if not isinstance(val, (int, float)) or not isinstance(mx, (int, float)) or mx <= 0 or not 0 <= val <= mx:
+        if not num(val) or not num(mx) or mx <= 0 or not 0 <= val <= mx:
             err(path, "infographic bar needs numbers 'bar_value' and 'bar_max' with 0 <= bar_value <= bar_max")
+    elif visual == "ring":
+        if not num(ig.get("percent")) or not 0 <= ig["percent"] <= 100:
+            err(path, "infographic ring needs 'percent' from 0 to 100")
+    elif visual in ("compare", "ranking"):
+        items = ig.get("items")
+        want = (2, 2) if visual == "compare" else (2, 5)
+        if not isinstance(items, list) or not want[0] <= len(items) <= want[1]:
+            err(path, f"infographic {visual} needs 'items': a list of {want[0]}" + ("" if want[0] == want[1] else f" to {want[1]}"))
+        else:
+            for i, it in enumerate(items, 1):
+                if not isinstance(it, dict) or not str(it.get("label") or "").strip() or not num(it.get("value")) or it["value"] < 0:
+                    err(path, f"infographic item {i} needs 'label' and a number 'value' of 0 or more ('display' is optional)")
+    elif visual == "countdown":
+        if not whole(ig.get("days"), 1, 120):
+            err(path, "infographic countdown needs 'days', a whole number from 1 to 120")
+        if not str(ig.get("deadline_label") or "").strip():
+            err(path, "infographic countdown needs 'deadline_label'")
+    elif visual == "timeline":
+        events = ig.get("events")
+        if not isinstance(events, list) or not 2 <= len(events) <= 5:
+            err(path, "infographic timeline needs 'events': a list of 2 to 5")
+        else:
+            for i, e in enumerate(events, 1):
+                if not isinstance(e, dict) or not str(e.get("date") or "").strip() or not str(e.get("label") or "").strip():
+                    err(path, f"infographic event {i} needs 'date' and 'label'")
+    for key in ("unit_label", "ring_label", "items_label", "deadline_label"):
+        if ig.get(key) is not None and re.search(r"<[A-Za-z/!]", str(ig.get(key))):
+            err(path, f"infographic '{key}' contains raw HTML")
     tiles = ig.get("tiles") or []
     if not isinstance(tiles, list) or len(tiles) > 3:
         err(path, "infographic 'tiles' must be a list of up to 3")

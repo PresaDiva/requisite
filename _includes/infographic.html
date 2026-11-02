@@ -1,22 +1,39 @@
 {%- comment -%}
   Daily infographic at the top of an edition page.
   Usage: {% include infographic.html ig=page.infographic %}
-  Reads the optional "infographic" block in a post's front matter (see README).
-  Everything is drawn here in Liquid and inline SVG, so it needs no JavaScript.
+  Reads the optional "infographic" block in a post's front matter (see README,
+  "Daily infographic"). The "visual" field picks one of these pictures:
+    dots       one dot per thing counted (1 to 300), some marked gold
+    scale      one square per unit (1 to 300), for big totals like $200B (all gold unless units_marked is set)
+    bar        one filled bar, a part of a whole
+    ring       a percentage ring
+    compare    two bars, before and after
+    ranking    up to 5 bars, biggest first
+    countdown  a calendar grid of days left until a deadline (1 to 120)
+    timeline   up to 5 dated steps
+    none       the big number on its own
+  Everything is drawn here in Liquid, HTML and inline SVG, so it needs no JavaScript.
 {%- endcomment -%}
 {%- assign ig = include.ig -%}
-<section class="infog" aria-label="Today in numbers">
+{%- assign v = ig.visual | default: "none" -%}
+{%- assign known = "|dots|scale|bar|ring|compare|ranking|countdown|timeline|" -%}
+{%- assign vkey = "|" | append: v | append: "|" -%}
+{%- unless known contains vkey %}{% assign v = "none" %}{% endunless -%}
+<section class="infog igv-{{ v }}" aria-label="Today in numbers">
   <p class="ig-kicker">{{ ig.kicker | default: "Today in numbers" }}</p>
   <p class="ig-head">{{ ig.headline }}{% if ig.highlight %} <span>{{ ig.highlight }}</span>{% endif %}</p>
-  <div class="ig-main{% if ig.visual != "dots" and ig.visual != "bar" %} ig-solo{% endif %}">
+  <div class="ig-main{% if v == "none" or v == "timeline" %} ig-solo{% endif %}">
     <div class="ig-big">
       <b>{{ ig.number }}</b>
       <span>{{ ig.label }}</span>
       {%- if ig.marked_label %}<em><i></i>{{ ig.marked_label }}</em>{% endif %}
     </div>
-    {%- if ig.visual == "dots" -%}
-      {%- assign total = ig.dots_total | default: 100 | at_most: 300 | at_least: 1 -%}
-      {%- assign marked = ig.dots_marked | default: 0 | at_most: total | at_least: 0 -%}
+
+    {%- if v == "dots" or v == "scale" -%}
+      {%- if v == "dots" %}{% assign total = ig.dots_total %}{% assign marked = ig.dots_marked %}{% else %}{% assign total = ig.units %}{% assign marked = ig.units_marked %}{% endif -%}
+      {%- assign total = total | default: 100 | at_most: 300 | at_least: 1 -%}
+      {%- assign marked = marked | default: 0 | at_most: total | at_least: 0 -%}
+      {%- if v == "scale" and marked == 0 %}{% assign marked = total %}{% endif -%}
       {%- assign cols = 20 -%}
       {%- if total <= 60 %}{% assign cols = 10 %}{% endif -%}
       {%- assign rows = total | plus: cols | minus: 1 | divided_by: cols -%}
@@ -24,39 +41,100 @@
       {%- assign h = rows | times: 20 -%}
       {%- assign hot = "|" -%}
       {%- if marked > 0 -%}
-        {%- assign step = total | divided_by: marked | at_least: 1 -%}
-        {%- for k in (1..marked) -%}
-          {%- assign kk = k | minus: 1 -%}
-          {%- assign jitter = kk | times: 7 | modulo: step -%}
-          {%- assign idx = kk | times: step | plus: jitter -%}
-          {%- assign hot = hot | append: idx | append: "|" -%}
-        {%- endfor -%}
+        {%- if v == "dots" -%}
+          {%- assign step = total | divided_by: marked | at_least: 1 -%}
+          {%- for k in (1..marked) -%}
+            {%- assign kk = k | minus: 1 -%}
+            {%- assign jitter = kk | times: 7 | modulo: step -%}
+            {%- assign idx = kk | times: step | plus: jitter -%}
+            {%- assign hot = hot | append: idx | append: "|" -%}
+          {%- endfor -%}
+        {%- else -%}
+          {%- for k in (1..marked) -%}{%- assign kk = k | minus: 1 -%}{%- assign hot = hot | append: kk | append: "|" -%}{%- endfor -%}
+        {%- endif -%}
       {%- endif -%}
-      <svg class="ig-dots" viewBox="0 0 {{ w }} {{ h }}" role="img" aria-label="{{ total }} dots{% if marked > 0 %}, {{ marked }} highlighted{% endif %}. {{ ig.label | escape }}">
+      <div class="ig-pic">
+      <svg class="ig-dots" viewBox="0 0 {{ w }} {{ h }}" role="img" aria-label="{{ total }} {% if v == "scale" %}squares{% else %}dots{% endif %}{% if marked > 0 %}, {{ marked }} highlighted{% endif %}. {{ ig.label | escape }}">
         {%- assign last = total | minus: 1 -%}
         {%- for i in (0..last) -%}
           {%- assign c = i | modulo: cols -%}
           {%- assign r = i | divided_by: cols -%}
-          {%- assign x = c | times: 20 | plus: 10 -%}
-          {%- assign y = r | times: 20 | plus: 10 -%}
           {%- assign key = "|" | append: i | append: "|" -%}
-          {%- if hot contains key -%}
-          <circle class="ring" cx="{{ x }}" cy="{{ y }}" r="7" style="animation-delay:{{ i | modulo: 5 | times: 0.4 }}s"/><circle class="h" cx="{{ x }}" cy="{{ y }}" r="7"/>
+          {%- if v == "dots" -%}
+            {%- assign x = c | times: 20 | plus: 10 -%}{%- assign y = r | times: 20 | plus: 10 -%}
+            {%- if hot contains key -%}
+            <circle class="ring" cx="{{ x }}" cy="{{ y }}" r="7" style="animation-delay:{{ i | modulo: 5 | times: 0.4 }}s"/><circle class="h" cx="{{ x }}" cy="{{ y }}" r="7"/>
+            {%- else -%}
+            <circle class="d" cx="{{ x }}" cy="{{ y }}" r="5.5" style="--i:{{ i }}"/>
+            {%- endif -%}
           {%- else -%}
-          <circle class="d" cx="{{ x }}" cy="{{ y }}" r="5.5" style="--i:{{ i }}"/>
+            {%- assign x = c | times: 20 | plus: 2 -%}{%- assign y = r | times: 20 | plus: 2 -%}
+            <rect class="{% if hot contains key %}h{% else %}d{% endif %}" x="{{ x }}" y="{{ y }}" width="16" height="16" rx="2" style="--i:{{ i }}"/>
           {%- endif -%}
         {%- endfor -%}
       </svg>
-    {%- elsif ig.visual == "bar" -%}
+      {%- if ig.unit_label %}<p class="ig-cap">{{ ig.unit_label }}</p>{% endif %}
+      </div>
+
+    {%- elsif v == "bar" -%}
       {%- assign bmax = ig.bar_max | default: 100 | at_least: 1 -%}
       {%- assign bval = ig.bar_value | default: 0 | at_least: 0 | at_most: bmax -%}
       {%- assign pct = bval | times: 100.0 | divided_by: bmax | round: 1 -%}
-      <div class="ig-bar" role="img" aria-label="{{ ig.bar_label | default: ig.label | escape }}">
+      <div class="ig-pic" role="img" aria-label="{{ ig.bar_label | default: ig.label | escape }}">
         <div class="ig-track"><div class="ig-fill" style="width:{{ pct }}%"></div></div>
-        {%- if ig.bar_label %}<p class="ig-bar-label">{{ ig.bar_label }}</p>{% endif %}
+        {%- if ig.bar_label %}<p class="ig-cap">{{ ig.bar_label }}</p>{% endif %}
+      </div>
+
+    {%- elsif v == "ring" -%}
+      {%- assign p = ig.percent | default: 0 | at_least: 0 | at_most: 100 -%}
+      {%- assign dash = p | times: 339.29 | divided_by: 100.0 | round: 2 -%}
+      <div class="ig-pic ig-ringwrap">
+        <svg class="ig-ring" viewBox="0 0 140 140" role="img" aria-label="{{ p }} percent. {{ ig.ring_label | default: ig.label | escape }}">
+          <circle class="track" cx="70" cy="70" r="54"/>
+          <circle class="fill" cx="70" cy="70" r="54" stroke-dasharray="{{ dash }} 339.29" transform="rotate(-90 70 70)"/>
+          <text x="70" y="80" text-anchor="middle">{{ p }}%</text>
+        </svg>
+        {%- if ig.ring_label %}<p class="ig-cap">{{ ig.ring_label }}</p>{% endif %}
+      </div>
+
+    {%- elsif v == "compare" or v == "ranking" -%}
+      {%- assign items = ig.items | default: empty -%}
+      {%- if v == "compare" %}{% assign items = items | slice: 0, 2 %}{% else %}{% assign items = items | slice: 0, 5 %}{% endif -%}
+      {%- assign mx = 0 -%}
+      {%- for it in items %}{% if it.value > mx %}{% assign mx = it.value %}{% endif %}{% endfor -%}
+      {%- if mx <= 0 %}{% assign mx = 1 %}{% endif -%}
+      <div class="ig-pic">
+        <ol class="ig-bars">
+          {%- for it in items -%}
+          {%- assign pw = it.value | times: 100.0 | divided_by: mx | at_least: 2 | round: 1 -%}
+          <li class="{% if v == "compare" and forloop.last %}now{% elsif v == "ranking" and forloop.first %}now{% endif %}">
+            <span class="lab">{{ it.label }}</span>
+            <span class="row"><span class="bar" style="width:{{ pw }}%"></span><b>{{ it.display | default: it.value }}</b></span>
+          </li>
+          {%- endfor -%}
+        </ol>
+        {%- if ig.items_label %}<p class="ig-cap">{{ ig.items_label }}</p>{% endif %}
+      </div>
+
+    {%- elsif v == "countdown" -%}
+      {%- assign days = ig.days | default: 1 | at_least: 1 | at_most: 120 -%}
+      <div class="ig-pic" role="img" aria-label="{{ days }} days left{% if ig.deadline_label %} until {{ ig.deadline_label | escape }}{% endif %}">
+        <div class="ig-cal">
+          {%- for d in (1..days) -%}<span{% if forloop.last %} class="due"{% endif %}></span>{%- endfor -%}
+        </div>
+        {%- if ig.deadline_label %}<p class="ig-cap"><i></i>{{ ig.deadline_label }}</p>{% endif %}
       </div>
     {%- endif -%}
   </div>
+
+  {%- if v == "timeline" and ig.events %}
+  <ol class="ig-time">
+    {%- for e in ig.events limit: 5 %}
+    <li{% if forloop.last %} class="now"{% endif %}><b>{{ e.date }}</b><span>{{ e.label }}</span></li>
+    {%- endfor %}
+  </ol>
+  {%- endif %}
+
   {%- if ig.tiles and ig.tiles.size > 0 %}
   <div class="ig-tiles">
     {%- for t in ig.tiles limit: 3 %}

@@ -44,24 +44,37 @@ The email and the website share one brand language taken from requstudio.com: wa
 
 An edition can open with a "Today in numbers" panel on the website and in the email. It is optional and comes from an `infographic` block in the post's front matter; posts without it look exactly as before. The site version is `_includes/infographic.html` (styles at the end of `assets/css/brief.css`); the email version is a table inside `_includes/email-edition.html` (no SVG, so it survives mail apps). `.github/scripts/check_posts.py` checks the block.
 
+Every panel has the same frame: a `headline` (optional gold `highlight`), one hero `number` (8 characters or fewer) with a `label`, an optional `marked_label` pill, a picture chosen with `visual`, and up to 3 `tiles` (`number`, `label`, `section`: security, products, data, workforce, policy, environment, offbeat or other). Pick the picture that fits the day's data:
+
+| `visual` | Use it for | Extra fields |
+|---|---|---|
+| `dots` | A count from 1 to 300, some of them highlighted | `dots_total`, `dots_marked` |
+| `scale` | A big total shown as units | `units` (1 to 300), `unit_label` (e.g. "Each square = $1 billion"), optional `units_marked` |
+| `bar` | A part of a whole | `bar_value`, `bar_max`, optional `bar_label` |
+| `ring` | One standout percentage | `percent` (0 to 100), optional `ring_label` |
+| `compare` | Before and after, or two things side by side (second is highlighted) | `items`: 2 of `{label, value, display}`, optional `items_label` |
+| `ranking` | 2 to 5 things compared, biggest first (first is highlighted) | `items`: 2 to 5 of `{label, value, display}`, optional `items_label` |
+| `countdown` | Days left until a deadline | `days` (1 to 120), `deadline_label` |
+| `timeline` | A story told in dated steps (last is highlighted) | `events`: 2 to 5 of `{date, label}` |
+| `none` | The number speaks for itself | none |
+
+`value` is the plain number used to size bars; `display` is how it is written (e.g. `value: 4.649`, `display: "$4.65B"`).
+
 ```yaml
 infographic:
-  headline: "One AI attack tool."          # required, short
-  highlight: "200+ targets."               # optional, shown in gold after the headline
-  number: "200+"                           # required, the hero number (8 characters or fewer)
-  label: "organizations targeted by ..."   # required, what the number counts
-  visual: dots                             # dots, bar or none
-  dots_total: 200                          # dots: 1 to 300, one dot per thing counted
-  dots_marked: 9                           # dots: how many dots glow gold
-  marked_label: "9 confirmed breached"     # optional pill under the label
-  # bar_value: 40                          # bar: filled amount
-  # bar_max: 100                           # bar: full length
-  # bar_label: "40 of 100 ..."             # bar: caption under the bar
-  tiles:                                   # optional, up to 3
-    - number: "2"
-      label: "critical Langflow flaws ..."
-      section: security                    # security, products, data, workforce, policy, environment, offbeat or other
+  headline: "A run on the exchange."
+  number: "$3.64B"
+  label: "net outflow from Binance in under 10 hours after withdrawals resumed"
+  visual: compare
+  items:
+    - {label: "Deposits", value: 1.01, display: "$1.01B"}
+    - {label: "Withdrawals", value: 4.649, display: "$4.65B"}
+  items_label: "November 1, 06:00 to 15:30 UTC"
+  tiles:
+    - {number: "2", label: "critical Langflow flaws, CVSS 9.8", section: security}
 ```
+
+In the email every picture has a mail-safe version (bars as table cells, the timeline as rows); `dots` and `scale` show only their numbers and captions there.
 
 Every number must come from a source linked in that day's edition. Dot positions are spread automatically and carry no meaning.
 

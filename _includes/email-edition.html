@@ -82,6 +82,49 @@
         {%- if ig.marked_label %}
         <div style="padding-top:10px;"><span style="display:inline-block;background:#914AA1;color:#FAF8F5;font-family:{{ HEAD }};font-weight:700;font-size:13px;line-height:18px;padding:4px 12px;border-radius:999px;">&#9679; {{ ig.marked_label }}</span></div>
         {%- endif %}
+        {%- assign iv = ig.visual | default: "none" -%}
+        {%- assign ECAP = "font-family:" | append: BODY | append: ";font-size:13px;line-height:19px;color:#D9D2DC;padding-top:8px;" -%}
+        {%- if iv == "bar" or iv == "ring" -%}
+          {%- if iv == "bar" -%}
+            {%- assign bmax = ig.bar_max | default: 100 | at_least: 1 -%}
+            {%- assign pct = ig.bar_value | default: 0 | times: 100 | divided_by: bmax | at_least: 1 | at_most: 100 -%}
+            {%- assign cap = ig.bar_label -%}
+          {%- else -%}
+            {%- assign pct = ig.percent | default: 0 | at_least: 1 | at_most: 100 -%}
+            {%- assign cap = ig.ring_label -%}
+          {%- endif %}
+        <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin-top:16px;"><tr>
+          <td width="{{ pct }}%" style="background:#F2C14E;height:16px;font-size:1px;line-height:1px;">&nbsp;</td>
+          {%- if pct < 100 %}<td style="background:#4A4350;height:16px;font-size:1px;line-height:1px;">&nbsp;</td>{% endif %}
+        </tr></table>
+        {%- if cap %}<div style="{{ ECAP }}">{{ cap }}</div>{% endif %}
+        {%- elsif iv == "compare" or iv == "ranking" -%}
+          {%- if iv == "compare" %}{% assign items = ig.items | slice: 0, 2 %}{% else %}{% assign items = ig.items | slice: 0, 5 %}{% endif -%}
+          {%- assign mx = 0 -%}{%- for it in items %}{% if it.value > mx %}{% assign mx = it.value %}{% endif %}{% endfor -%}{%- if mx <= 0 %}{% assign mx = 1 %}{% endif %}
+        <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin-top:12px;">
+          {%- for it in items -%}
+          {%- assign pw = it.value | times: 80 | divided_by: mx | at_least: 2 -%}
+          {%- assign bc = "#6B6274" -%}{%- if iv == "compare" and forloop.last %}{% assign bc = "#F2C14E" %}{% elsif iv == "ranking" and forloop.first %}{% assign bc = "#F2C14E" %}{% endif %}
+          <tr><td style="font-family:{{ BODY }};font-size:13px;line-height:18px;color:#D9D2DC;padding:8px 0 3px 0;">{{ it.label }}</td></tr>
+          <tr><td><table role="presentation" width="100%" cellpadding="0" cellspacing="0"><tr>
+            <td width="{{ pw }}%" style="background:{{ bc }};height:18px;font-size:1px;line-height:1px;">&nbsp;</td>
+            <td style="font-family:{{ HEAD }};font-weight:800;font-size:15px;line-height:18px;color:#FAF8F5;padding-left:8px;white-space:nowrap;">{{ it.display | default: it.value }}</td>
+          </tr></table></td></tr>
+          {%- endfor %}
+        </table>
+        {%- if ig.items_label %}<div style="{{ ECAP }}">{{ ig.items_label }}</div>{% endif %}
+        {%- elsif iv == "countdown" %}
+        <div style="font-family:{{ HEAD }};font-weight:700;font-size:15px;line-height:22px;color:#F2C14E;padding-top:12px;">&#9632; {{ ig.days }} days left{% if ig.deadline_label %}: <span style="color:#FAF8F5;">{{ ig.deadline_label }}</span>{% endif %}</div>
+        {%- elsif iv == "timeline" and ig.events %}
+        <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin-top:14px;">
+          {%- for e in ig.events limit: 5 %}
+          <tr><td valign="top" width="96" style="font-family:{{ HEAD }};font-weight:800;font-size:14px;line-height:20px;color:{% if forloop.last %}#F2C14E{% else %}#FAF8F5{% endif %};padding:5px 10px 5px 0;border-left:3px solid {% if forloop.last %}#F2C14E{% else %}#4A4350{% endif %};padding-left:10px;">{{ e.date }}</td>
+          <td valign="top" style="font-family:{{ BODY }};font-size:14px;line-height:20px;color:#D9D2DC;padding:5px 0;">{{ e.label }}</td></tr>
+          {%- endfor %}
+        </table>
+        {%- elsif iv == "scale" and ig.unit_label %}
+        <div style="{{ ECAP }}">{{ ig.unit_label }}</div>
+        {%- endif %}
         {%- if ig.tiles and ig.tiles.size > 0 %}
         <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin-top:18px;"><tr>
           {%- for t in ig.tiles limit: 3 %}
