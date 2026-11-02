@@ -6,6 +6,9 @@ layout: default
 <article class="brief">
   <header class="brief-hero">
     <div class="wrap narrow">
+      {%- if page.infographic %}
+      {% include infographic.html ig=page.infographic %}
+      {%- endif %}
       <p class="eyebrow">ReQuisite / Daily read</p>
       <h1 class="brief-title">{{ page.title | remove: "ReQuisite: " }}</h1>
       <p class="brief-meta">

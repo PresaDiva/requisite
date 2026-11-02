@@ -22,11 +22,7 @@
         <span class="brand-sep" aria-hidden="true"></span>
         <span class="brand-name">ReQuisite</span>
       </a>
-      <nav class="nav" aria-label="Main">
-        <a href="{{ "/latest/" | relative_url }}">Latest</a>
-        <a href="{{ "/#archive" | relative_url }}">All ReQuisites</a>
-        <a href="{{ "/feed.xml" | relative_url }}">RSS</a>
-        <a href="{{ site.studio_url }}">ReQu Studio</a>
+      <nav class="nav" aria-label="Subscribe">
         <a class="nav-cta" href="#subscribe">Subscribe</a>
       </nav>
     </div>
@@ -37,6 +33,12 @@
   <footer class="site-footer">
     <div class="wrap footer-row">
       <p class="footer-brand">ReQu Studio</p>
+      <nav class="footer-nav" aria-label="Site">
+        <a href="{{ "/latest/" | relative_url }}">Latest</a>
+        <a href="{{ "/#archive" | relative_url }}">All ReQuisites</a>
+        <a href="{{ "/feed.xml" | relative_url }}">RSS</a>
+        <a href="{{ site.studio_url }}">ReQu Studio</a>
+      </nav>
       <p>Curated by Chelsea Wilson at <a href="{{ site.studio_url }}">ReQu Studio</a>. Every item links to its original source; summaries state only what the source says.</p>
       <p class="feeds"><a href="{{ "/feed.xml" | relative_url }}">RSS: all ReQuisites</a> <span aria-hidden="true">·</span> <a href="{{ "/latest.xml" | relative_url }}">RSS: latest only</a></p>
     </div>

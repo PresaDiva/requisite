@@ -39,3 +39,32 @@ The email and the website share one brand language taken from requstudio.com: wa
 - `future: true` in `_config.yml` makes sure a post dated 07:30 later the same day is still published when the task runs earlier in the morning.
 - Sections with no news are left out of the edition. The home page archive list is paginated (10 per page, `assets/js/archive.js`).
 - Section looks: `_data/requisite_sections.yml` (email) and `assets/js/brief.js` plus `assets/css/brief.css` (site). Unknown headings fall back to a neutral grey "More" look in the email.
+
+### Daily infographic
+
+An edition can open with a "Today in numbers" panel on the website and in the email. It is optional and comes from an `infographic` block in the post's front matter; posts without it look exactly as before. The site version is `_includes/infographic.html` (styles at the end of `assets/css/brief.css`); the email version is a table inside `_includes/email-edition.html` (no SVG, so it survives mail apps). `.github/scripts/check_posts.py` checks the block.
+
+```yaml
+infographic:
+  headline: "One AI attack tool."          # required, short
+  highlight: "200+ targets."               # optional, shown in gold after the headline
+  number: "200+"                           # required, the hero number (8 characters or fewer)
+  label: "organizations targeted by ..."   # required, what the number counts
+  visual: dots                             # dots, bar or none
+  dots_total: 200                          # dots: 1 to 300, one dot per thing counted
+  dots_marked: 9                           # dots: how many dots glow gold
+  marked_label: "9 confirmed breached"     # optional pill under the label
+  # bar_value: 40                          # bar: filled amount
+  # bar_max: 100                           # bar: full length
+  # bar_label: "40 of 100 ..."             # bar: caption under the bar
+  tiles:                                   # optional, up to 3
+    - number: "2"
+      label: "critical Langflow flaws ..."
+      section: security                    # security, products, data, workforce, policy, environment, offbeat or other
+```
+
+Every number must come from a source linked in that day's edition. Dot positions are spread automatically and carry no meaning.
+
+### Header and footer
+
+The header shows only the ReQu Studio / ReQuisite brand and the Subscribe button. The site links (Latest, All ReQuisites, RSS, ReQu Studio) are in the footer (`_layouts/default.html`).

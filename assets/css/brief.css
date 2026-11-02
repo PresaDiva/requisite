@@ -477,3 +477,54 @@ p.field.act .label::after { content: ""; }
 .latest-top3 a { color: var(--purple-dark); }
 .latest-top3 a:hover { color: var(--ink); }
 
+
+/* Daily infographic at the top of an edition (_includes/infographic.html).
+   Shown only when a post has an "infographic" block in its front matter. */
+.brief-hero .wrap:has(.infog) { padding-top: 28px; }
+.infog { background: var(--ink); color: var(--on-dark); border-radius: var(--radius); padding: 22px clamp(16px, 4vw, 28px); margin: 0 0 28px; }
+.ig-kicker { margin: 0; font: 600 13px/1.2 var(--head); letter-spacing: .1em; text-transform: uppercase; color: var(--gold); }
+.ig-head { margin: 6px 0 18px; font: 800 clamp(1.6rem, 5.5vw, 2.3rem)/1.12 var(--head); color: var(--on-dark); text-wrap: balance; }
+.ig-head span { color: var(--gold); }
+.ig-main { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.6fr); gap: 20px; align-items: center; }
+.ig-main.ig-solo { grid-template-columns: 1fr; }
+@media (max-width: 640px) { .ig-main { grid-template-columns: 1fr; } }
+.ig-big { min-width: 0; }
+.ig-big b { display: block; font: 800 clamp(3.4rem, 12vw, 5.2rem)/.95 var(--head); color: var(--gold); letter-spacing: -.02em; }
+.ig-big span { display: block; margin-top: 8px; font-size: 15px; line-height: 1.45; color: var(--on-dark-muted); }
+.ig-big em { display: inline-flex; align-items: center; gap: 8px; margin-top: 12px; font: 700 14px var(--head); font-style: normal; color: var(--on-dark); background: var(--purple); padding: 5px 12px; border-radius: 999px; }
+.ig-big em i { width: 10px; height: 10px; border-radius: 50%; background: var(--gold); display: inline-block; }
+.ig-dots { display: block; width: 100%; height: auto; overflow: visible; }
+.ig-dots .d { fill: #4A4350; }
+.ig-dots .h { fill: var(--gold); }
+.ig-dots .ring { fill: none; stroke: var(--gold); stroke-width: 2; opacity: .6; transform-box: fill-box; transform-origin: center; }
+.ig-bar { min-width: 0; }
+.ig-track { height: 28px; border-radius: 999px; background: #4A4350; overflow: hidden; }
+.ig-fill { height: 100%; background: var(--gold); border-radius: 999px; }
+.ig-bar-label { margin: 10px 0 0; font-size: 15px; color: var(--on-dark-muted); }
+@media (prefers-reduced-motion: no-preference) {
+  .ig-dots .d { animation: ig-pop .5s ease-out both; animation-delay: calc(var(--i, 0) * 4ms); }
+  .ig-dots .ring { animation: ig-ping 2.2s ease-out infinite; }
+  @keyframes ig-pop { from { opacity: .25; } to { opacity: 1; } }
+  @keyframes ig-ping { 0% { transform: scale(.6); opacity: .8; } 100% { transform: scale(2.2); opacity: 0; } }
+}
+.ig-tiles { display: grid; grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr)); gap: 12px; margin-top: 20px; }
+.ig-tile { background: #2A2531; border-radius: var(--radius-sm); padding: 14px 16px; border-top: 4px solid #D9D2DC; min-width: 0; }
+.ig-tile[data-topic="security"] { border-top-color: #F2C14E; }
+.ig-tile[data-topic="products"], .ig-tile[data-topic="offbeat"] { border-top-color: #C58BD3; }
+.ig-tile[data-topic="data"], .ig-tile[data-topic="environment"] { border-top-color: #4FA39D; }
+.ig-tile[data-topic="workforce"] { border-top-color: #E0A26B; }
+.ig-tile b { display: block; font: 800 2.2rem/1 var(--head); color: var(--on-dark); font-variant-numeric: tabular-nums; }
+.ig-tile span { display: block; margin-top: 6px; font-size: 14px; line-height: 1.45; color: var(--on-dark-muted); }
+
+/* Header holds only the brand and Subscribe; site links live in the footer. */
+.header-row { flex-wrap: nowrap; }
+.header-row .nav { flex: none; }
+.footer-nav { display: flex; flex-wrap: wrap; gap: 4px 24px; margin: 6px 0 4px; font-size: 15px; }
+.footer-nav a { color: var(--on-dark); text-decoration: none; padding: 6px 0; }
+.footer-nav a:hover { color: #FFFFFF; text-decoration: underline; }
+@media (max-width: 420px) {
+  .brand { gap: 8px; }
+  .brand-mark { font-size: 18px; }
+  .brand-name { font-size: 14px; }
+  .nav .nav-cta { padding: 9px 14px; }
+}

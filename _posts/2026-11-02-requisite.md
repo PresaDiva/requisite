@@ -2,6 +2,25 @@
 layout: post
 title: "ReQuisite: Monday, November 2, 2026"
 date: 2026-11-02 07:30:00 -0400
+infographic:
+  headline: "One AI attack tool."
+  highlight: "200+ targets."
+  number: "200+"
+  label: "organizations targeted by a China-linked group running the ARTEX AI pentesting tool"
+  visual: dots
+  dots_total: 200
+  dots_marked: 9
+  marked_label: "9 confirmed breached"
+  tiles:
+    - number: "2"
+      label: "critical Langflow flaws, CVSS 9.8. Fix: upgrade to 1.13.0"
+      section: security
+    - number: "35+"
+      label: "turbines at xAI's Memphis site alleged to run without air permits"
+      section: environment
+    - number: "$200B"
+      label: "in data center projects delayed, stalled or blocked in the first half of 2026"
+      section: environment
 ---
 
 ## Top 3 today

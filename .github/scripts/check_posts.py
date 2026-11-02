@@ -22,6 +22,57 @@ def err(path, msg):
     errors.append(f"{path}: {msg}")
 
 
+TOPICS = {"security", "products", "data", "workforce", "policy", "environment", "offbeat", "other"}
+
+
+def check_infographic(path, front):
+    """Checks the optional infographic block drawn at the top of the edition page and email."""
+    try:
+        import yaml
+    except ImportError:
+        print(f"{path}: PyYAML not installed, infographic not checked")
+        return
+    try:
+        ig = (yaml.safe_load(front) or {}).get("infographic")
+    except yaml.YAMLError as e:
+        err(path, f"front matter is not valid YAML: {e}")
+        return
+    if not isinstance(ig, dict):
+        err(path, "infographic must be a block of fields")
+        return
+    for key in ("headline", "number", "label"):
+        if not str(ig.get(key) or "").strip():
+            err(path, f"infographic needs '{key}'")
+    for key in ("headline", "highlight", "number", "label", "marked_label", "bar_label", "kicker"):
+        val = ig.get(key)
+        if val is not None and re.search(r"<[A-Za-z/!]", str(val)):
+            err(path, f"infographic '{key}' contains raw HTML")
+    if len(str(ig.get("number", ""))) > 8:
+        err(path, "infographic 'number' should be short (8 characters or fewer), e.g. 200+ or $200B")
+    visual = ig.get("visual", "none")
+    if visual not in ("dots", "bar", "none"):
+        err(path, "infographic 'visual' must be dots, bar or none")
+    if visual == "dots":
+        total, marked = ig.get("dots_total"), ig.get("dots_marked", 0)
+        if not isinstance(total, int) or not 1 <= total <= 300:
+            err(path, "infographic 'dots_total' must be a whole number from 1 to 300")
+        elif not isinstance(marked, int) or not 0 <= marked <= total:
+            err(path, "infographic 'dots_marked' must be a whole number from 0 to dots_total")
+    if visual == "bar":
+        val, mx = ig.get("bar_value"), ig.get("bar_max")
+        if not isinstance(val, (int, float)) or not isinstance(mx, (int, float)) or mx <= 0 or not 0 <= val <= mx:
+            err(path, "infographic bar needs numbers 'bar_value' and 'bar_max' with 0 <= bar_value <= bar_max")
+    tiles = ig.get("tiles") or []
+    if not isinstance(tiles, list) or len(tiles) > 3:
+        err(path, "infographic 'tiles' must be a list of up to 3")
+        return
+    for i, t in enumerate(tiles, 1):
+        if not isinstance(t, dict) or not str(t.get("number") or "").strip() or not str(t.get("label") or "").strip():
+            err(path, f"infographic tile {i} needs 'number' and 'label'")
+        elif t.get("section", "other") not in TOPICS:
+            err(path, f"infographic tile {i} 'section' must be one of {', '.join(sorted(TOPICS))}")
+
+
 for path in sorted(glob.glob("_posts/*.md")):
     text = open(path, encoding="utf-8").read()
     m = re.match(r"---\n(.*?)\n---\n(.*)", text, re.S)
@@ -39,6 +90,8 @@ for path in sorted(glob.glob("_posts/*.md")):
         err(path, 'body must start with "## Top 3 today"')
     if "—" in text:
         err(path, "contains an em dash")
+    if re.search(r"^infographic:", front, re.M):
+        check_infographic(path, front)
 
     headings = re.findall(r"^## (.+)$", body, re.M)
     for h in headings:
