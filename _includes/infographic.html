@@ -23,7 +23,8 @@
   <p class="ig-kicker">{{ ig.kicker | default: "Today in numbers" }}</p>
   <p class="ig-head">{{ ig.headline }}{% if ig.highlight %} <span>{{ ig.highlight }}</span>{% endif %}</p>
   <div class="ig-main{% if v == "none" or v == "timeline" %} ig-solo{% endif %}">
-    <div class="ig-big">
+    {%- assign nlen = ig.number | size -%}
+    <div class="ig-big{% if nlen > 6 %} ig-xlong{% elsif nlen > 4 %} ig-long{% endif %}">
       <b>{{ ig.number }}</b>
       <span>{{ ig.label }}</span>
       {%- if ig.marked_label %}<em><i></i>{{ ig.marked_label }}</em>{% endif %}

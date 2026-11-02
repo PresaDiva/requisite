@@ -569,3 +569,8 @@ p.field.act .label::after { content: ""; }
   .ig-time li:last-child::before { display: none; }
   .ig-time li::after { top: 4px; }
 }
+
+/* Longer hero numbers ($3.64B, 8 days) get a smaller size so they never run into the picture. */
+.ig-big.ig-long b { font-size: clamp(3rem, 9vw, 4rem); }
+.ig-big.ig-xlong b { font-size: clamp(2.6rem, 7.5vw, 3.2rem); }
+.ig-main.ig-solo .ig-big b { font-size: clamp(3.4rem, 12vw, 5.2rem); }
